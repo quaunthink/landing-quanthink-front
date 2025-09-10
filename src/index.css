@@ -167,14 +167,14 @@ a:focus-visible{ outline-offset:4px }
 .nav-a:hover .nav-underline{ transform: scaleX(1) }
 
 .nav-burger{ display:grid; place-items:center; gap:4px; border:1px solid var(--qt-line); padding:.4rem .5rem; border-radius:10px }
-.nav-burger > span{ display:block; width:20px; height:2px; background:#cfd7ff; border-radius:2px }
+.nav-burger > span{ display:block; width:30px; height:2px; background:#cfd7ff; border-radius:2px }
 
 .nav-tray{ transform-origin: top; transform: scaleY(0); transition: transform .25s ease; background: rgba(9,12,20,.85); border-bottom:1px solid var(--qt-line) }
 .nav-tray.open{ transform: scaleY(1) }
 .nav-row{ display:block; padding:14px 22px; border-top: 1px solid var(--qt-line) }
 
 /* Footer social pills */
-.social{ display:inline-grid; place-items:center; width:30px; height:30px; border:1px solid var(--qt-line); border-radius:10px; background: rgba(255,255,255,.02) }
+.social{ display:inline-grid; place-items:center; width:30px; height:50px; border:1px solid var(--qt-line); border-radius:10px; background: rgba(255,255,255,.02) }
 .social.small{ width:26px; height:26px; font-size:12px }
 
 /* Reset tras remover Lenis (asegura scroll nativo) */
@@ -226,10 +226,10 @@ html, body {
 .btn-outline:hover{ border-color:var(--qt-ring); }
 
 /* Burger (oculto en desktop) */
-.nav-burger{ display:none; place-items:center; gap:4px;
-  border:1px solid var(--qt-line); padding:.45rem .6rem; border-radius:10px;
+.nav-burger{ display:none; place-items:center; gap:8px;
+  border:1px solid var(--qt-line); padding:.6rem .6rem; border-radius:10px;
 }
-.nav-burger > span{ width:20px; height:2px; background:#cfd7ff; border-radius:2px; display:block; }
+.nav-burger > span{ width:40px; height:4px; background:#cfd7ff; border-radius:2px; display:block; }
 
 /* Tray móvil (full width + mismo padding que el contenedor) */
 .nav-tray{
