@@ -45,7 +45,6 @@ export default function BackgroundVideo() {
         ref={videoRef}
         src="/hero-bg.mp4"
         autoPlay
-        loop
         muted
         playsInline
       />

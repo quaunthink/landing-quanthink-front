@@ -27,7 +27,7 @@ body{
 .background-video video { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
 .background-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,.35) 0%, rgba(0,0,0,.55) 100%);
+  background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.405) 100%);
   pointer-events: none;
 }
 
@@ -65,7 +65,7 @@ body{
 
 /* Navbar */
 .navlink{ padding:.55rem .8rem; border-radius:10px; color:#cfdbff }
-.navlink:hover{ color:#fff; background:rgba(255,255,255,.06) }
+.navlink:hover{ color:#fff; background:rgba(244, 244, 242, 0.06) }
 
 /* Login */
 .login-wrap{ min-height: calc(100vh - 72px - 120px); display:grid; place-items:center; padding: 48px 16px; }
@@ -196,9 +196,9 @@ html, body {
   position:absolute; inset:0;
   left:50%; right:50%;
   margin-left:-50vw; margin-right:-50vw;   /* bleed */
-  background:#1a1f36;
+  background:#ffffff50;
   border-bottom:1px solid var(--border, rgba(255,255,255,.12));
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(2px);
   z-index:-1;
 }
 
@@ -207,16 +207,16 @@ html, body {
   padding:12px 16px;
   display:flex; align-items:center; justify-content:space-between;
   gap:12px; flex-wrap:wrap;
-  min-height:120px;                        /* altura para el logo */
+  min-height:70px;                        /* altura para el logo */
   box-sizing:border-box;
 }
 
 /* Marca / logo de tamaño fijo (no cambia en móvil) */
-.brand img{ height:100px; width:auto; display:block; }
-
+.brand img{ height:70px; width:auto; display:block; }
+/*aqui se cambia color de las letras del menu*/
 .links{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-.links a{ color:var(--qt-muted, #9AA7C7); }
-.links a:hover{ color:var(--qt-ink, #EAF0FF); }
+.links a{ color:rgb(29,75,179); }
+.links a:hover{ color:var(--qt-ink, #f9ffea); }
 
 /* Botón outline opcional (Demo) */
 .btn-outline{
@@ -229,7 +229,7 @@ html, body {
 .nav-burger{ display:none; place-items:center; gap:8px;
   border:1px solid var(--qt-line); padding:.6rem .6rem; border-radius:10px;
 }
-.nav-burger > span{ width:40px; height:4px; background:#cfd7ff; border-radius:2px; display:block; }
+.nav-burger > span{ width:40px; height:4px; background:rgb(29,75,179); border-radius:2px; display:block; }
 
 /* Tray móvil (full width + mismo padding que el contenedor) */
 .nav-tray{
