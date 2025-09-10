@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const NavLinkA = ({ to, children }) => (
@@ -10,14 +10,25 @@ const NavLinkA = ({ to, children }) => (
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   return (
     <header className="nav">
       <div className="nav-inner">
-        {/* Brand / Logo (tamaño fijo lo controla .brand img en navbar.css) */}
+        {/* Brand / Logo */}
         <div className="brand">
           <Link to="/" aria-label="Inicio">
-            <img src="/brand.png" alt="Quanthink" />
+            <img
+              src={isMobile ? "/brand-mobile.png" : "/brand-desktop.png"}
+              alt="Quanthink"
+            />
           </Link>
         </div>
 
@@ -55,7 +66,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Menú móvil desplegable (full width por CSS de .nav::before + nav-tray) */}
+      {/* Menú móvil */}
       <div className={`nav-tray ${open ? "open" : ""}`}>
         <a href="/" className="nav-row" onClick={() => setOpen(false)}>
           Inicio
