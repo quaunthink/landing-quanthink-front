@@ -46,10 +46,28 @@ body{
 
 /* ===== UI ===== */
 .btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
-  padding:.9rem 1.2rem; border-radius:12px; font-weight:700; color:#fff;
-  background: linear-gradient(180deg, var(--qt-accent) 0%, var(--qt-accent-2) 100%);
-  border:1px solid #1f55d6; transition: transform .15s ease, filter .2s ease;
+--black-700: hsla(0 0% 12% / 1);
+  --border_radius: 9999px;
+  --transtion: 0.3s ease-in-out;
+  --offset: 2px;
+
+  cursor: pointer;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  transform-origin: center;
+
+  padding: 1rem 2rem;
+  background-color: transparent;
+
+  border: none;
+  border-radius: var(--border_radius);
+  transform: scale(calc(1 + (var(--active, 0) * 0.1)));
+
+  transition: transform var(--transtion);
 }
 .btn:hover{ transform: translateY(-2px); filter: brightness(1.06); }
 .btn-ghost{
@@ -101,10 +119,24 @@ body{
 }
 @media (max-width: 768px){ .contact-dock{ display:none } }
 
-/* Accesibilidad */
-:focus-visible{ outline:2px solid var(--qt-ring); outline-offset:2px; border-radius:8px }
-a:focus-visible{ outline-offset:4px }
-
+/* === Accesibilidad: focus ring global (halo blanco suave) === */
+:root{
+  --focus-ring: rgba(255,255,255,.55);
+  --focus-ring-shadow: 0 0 0 3px var(--focus-ring), 0 8px 24px rgba(0,0,0,.25);
+}
+button:focus, button:focus-visible,
+a:focus, a:focus-visible,
+[role="button"]:focus, [role="button"]:focus-visible,
+.button:focus, .button:focus-visible,
+.btn:focus, .btn:focus-visible,
+.btn-ghost:focus, .btn-ghost:focus-visible,
+.nav-a:focus-visible, .nav-burger:focus-visible,
+.rail-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring-shadow);
+  border-color: transparent;
+}
+a, button { -webkit-tap-highlight-color: transparent; }
 
 /* === UI UPGRADE PACK === */
 
@@ -139,7 +171,7 @@ a:focus-visible{ outline-offset:4px }
   padding:.85rem 1.15rem; border-radius:14px; font-weight:800; letter-spacing:.2px;
   background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,.22), transparent 30%),
               linear-gradient(180deg, var(--qt-accent), var(--qt-accent-2));
-  color:#fff; border:1px solid #1f55d6; box-shadow: var(--qt-glow);
+  color:#fff; border:1px solid #f08d0c; box-shadow: var(--qt-glow);
   overflow:hidden; isolation:isolate;
 }
 .btn-magic .btn-shine{
@@ -251,4 +283,67 @@ html, body {
   .links-desktop{ display:none; }          /* esconde los links en la barra */
   .nav-burger{ display:grid; }             /* muestra el burger */
 }
+/* ===== FIX GLOBAL: focus ring blanco suave (sin azul nativo) ===== */
+:root{
+  --focus-ring: rgba(255,255,255,.55);
+  --focus-shadow: 0 0 0 3px var(--focus-ring), 0 8px 24px rgba(0,0,0,.25);
+}
 
+/* Apaga el outline azul nativo y aplica halo blanco a elementos interactivos */
+:where(a, button, .button, .btn, .btn-ghost, .nav-a, .nav-burger, [role="button"]):focus,
+:where(a, button, .button, .btn, .btn-ghost, .nav-a, .nav-burger, [role="button"]):focus-visible,
+:where(.button):focus-within { /* por si el foco cae dentro (svg, span, etc.) */
+  outline: none !important;
+  box-shadow: var(--focus-shadow) !important;
+  border-color: transparent !important;
+}
+
+/* Quita restos del UA en Firefox */
+button::-moz-focus-inner { border: 0; }
+
+/* Evita highlight azul en móviles */
+a, button { -webkit-tap-highlight-color: transparent; }
+a.button:focus,
+a.button:focus-visible { outline: none !important; }
+/* ===== FIX FINAL: fuera borde azul nativo; halo blanco suave ===== */
+
+/* 1) Apaga cualquier outline nativo del navegador en TODO foco */
+:where(:focus, :focus-visible){
+  outline: none !important;
+  outline-color: transparent !important;
+  outline-offset: 0 !important;
+}
+
+/* 2) Algunos navegadores (Firefox) meten un inner border en botones */
+button::-moz-focus-inner { border: 0; }
+
+/* 3) Aplica un focus ring blanco suave SOLO a controles interactivos comunes */
+:where(
+  button,
+  [type="button"],
+  [type="submit"],
+  [role="button"],
+  a,
+  .button,
+  .btn,
+  .btn-ghost,
+  .nav-a,
+  .nav-burger
+):is(:focus, :focus-visible, :focus-within){
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.55),
+    0 8px 24px rgba(0,0,0,.25) !important;
+  border-color: transparent !important;
+}
+
+/* 4) Si el foco cae en hijos (ej. el <svg> dentro de MagicButton), sube el halo al contenedor */
+:where(.button):has(:focus),
+:where(.btn):has(:focus),
+:where(.btn-ghost):has(:focus) {
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.55),
+    0 8px 24px rgba(0,0,0,.25) !important;
+}
+
+/* 5) Evita highlight azul en móviles */
+a, button { -webkit-tap-highlight-color: transparent; }

@@ -1,4 +1,5 @@
 import React from "react";
+import MagicButton from "../components/ui/MagicButton";
 
 const Feature = ({title, desc}) => (
   <div className="card p-6">
@@ -37,8 +38,9 @@ export default function HomePage(){
               Desde un sprint táctico hasta programas multi-equipo.
             </p>
             <div className="mt-8 flex gap-3 flex-wrap">
-              <a href="#contacto" className="btn">Empezar un proyecto</a>
-              <a href="#servicios" className="btn-ghost">Ver servicios</a>
+              <MagicButton as="a" href="#contacto" >Empezar un proyecto</MagicButton>
+              <MagicButton as="a" href="#servicios" >Servicios</MagicButton>
+
             </div>
           </div>
 

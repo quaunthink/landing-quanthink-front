@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import BurguerButton from "../ui/BurguerButton";
+
 
 const NavLinkA = ({ to, children }) => (
   <Link to={to} className="nav-a">
@@ -47,23 +49,20 @@ export default function Navbar() {
             <span>Contacto</span>
             <i className="nav-underline" />
           </a>
-          <Link to="/login" className="btn-outline">
+          <Link to="/login" className="nav-a">
             Demo
+            <i className="nav-underline" />
           </Link>
         </nav>
 
         {/* Burger móvil */}
-        <button
-          type="button"
-          className="nav-burger"
-          aria-label="Abrir menú"
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <BurguerButton
+  as="button"
+  className="nav-burger md:hidden"   // 👈 visible solo < md
+  aria-label="Abrir menú"
+  aria-expanded={open}
+  onClick={() => setOpen(v => !v)}
+/>
       </div>
 
       {/* Menú móvil */}
