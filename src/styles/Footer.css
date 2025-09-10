@@ -1,0 +1,20 @@
+.footer {
+  margin-top: 24px;
+  background: var(--footer);
+  border-top: 1px solid var(--border);
+}
+.footer-inner {
+  max-width: 1140px; margin: 0 auto;
+  padding: 14px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap;
+  color: var(--muted);
+}
+.footer-links { display: flex; gap: 14px; flex-wrap: wrap; }
+.footer-links a { color: var(--muted); }
+.footer-links a:hover { color: var(--text); }
+
+/* Mobile */
+@media (max-width: 640px) {
+  .footer-inner { justify-content: flex-start; }
+}

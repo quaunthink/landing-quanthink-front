@@ -1,0 +1,24 @@
+.admin-header { padding: 24px 0 12px; }
+.admin-title { font-size: clamp(22px, 3vw, 28px); }
+.admin-subtitle { color: var(--muted); margin-top: 4px; }
+
+.admin-grid {
+  display: grid; gap: 16px; margin: 16px 0 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.admin-empty {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  color: var(--muted);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .admin-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .admin-grid { grid-template-columns: 1fr; }
+}

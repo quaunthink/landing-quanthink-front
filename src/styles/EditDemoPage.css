@@ -1,0 +1,38 @@
+.edit-header { padding: 24px 0 12px; }
+
+.edit-alert {
+  margin: 8px 0 12px;
+  background: rgba(95,191,122,.12);
+  border: 1px solid rgba(95,191,122,.45);
+  color: #caffdb;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.edit-form {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.edit-label { color: var(--muted); font-size: 14px; }
+.edit-input, .edit-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  background: #101327;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.edit-input:focus, .edit-textarea:focus { border-color: var(--ring); }
+
+.edit-btn {
+  align-self: flex-end;
+  padding: 10px 12px;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: #fff;
+  border-radius: 10px;
+}
+.edit-btn:disabled { opacity: .75; }
