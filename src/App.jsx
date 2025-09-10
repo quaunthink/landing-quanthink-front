@@ -1,53 +1,33 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import BackgroundVideo from "./components/decors/BackgroundVideo";
 import Cursor from "./components/ui/Cursor";
-import ContactDock from "./components/ui/ContactDock";
+import SocialRail from "./components/ui/SocialRail";
 import ScrollToSection from "./components/transitions/ScrollToSection";
+import SmoothScroll from "./components/transitions/SmoothScroll";
+import GradientBeams from "./components/decors/GradientBeams";
+import NoiseOverlay from "./components/decors/NoiseOverlay";
+import PageTransitions from "./components/transitions/PageTransitions";
 
-// Páginas
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import AdminDashboard from "./pages/AdminDashboard";
-import ClientDashboard from "./pages/ClientDashboard";
-import EditDemoPage from "./pages/EditDemoPage";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
-
-export default function App() {
+export default function App(){
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Fondo de video con overlay */}
+    <div className="min-h-svh flex flex-col">
       <BackgroundVideo />
-
-      {/* Cursor y navegación */}
+      <NoiseOverlay />
+      <GradientBeams />
+      <SmoothScroll />
       <Cursor />
       <Navbar />
 
-      {/* Contenido con scroll-transition hacia secciones */}
       <main className="flex-1">
         <ScrollToSection>
-          <Routes>
-            {/* Públicas */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-
-            {/* Protegidas */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              <Route path="/admin/demos/edit/:demoId" element={<EditDemoPage />} />
-              <Route path="/client/dashboard" element={<ClientDashboard />} />
-            </Route>
-          </Routes>
+          <PageTransitions />
         </ScrollToSection>
       </main>
 
       <Footer />
-      <ContactDock />
+      <SocialRail />
     </div>
   );
 }
