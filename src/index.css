@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-/* ===== Tokens ===== */
+/* =========================
+   TOKENS / BASE
+========================= */
 :root{
   --qt-bg:#0A0D14;
   --qt-ink:#EAF0FF;
@@ -9,74 +11,88 @@
   --qt-accent-2:#1C5DDB;
   --qt-line:rgba(255,255,255,.10);
   --qt-ring:#6FA4FF;
+
+  /* extras */
+  --qt-nav:#0B1020;
+  --qt-purple:#7C5CFF;
+  --qt-pink:#FF4D9D;
+  --qt-cyan:#2CF7F7;
+  --qt-amber:#FFC24D;
+  --qt-glow: 0 0 40px rgba(111,164,255,.25);
+
+  /* focus */
+  --focus-ring: rgba(255,255,255,.55);
+  --focus-shadow: 0 0 0 3px var(--focus-ring), 0 8px 24px rgba(0,0,0,.25);
 }
 *{ box-sizing:border-box }
 html,body,#root{height:100%}
-html{ scroll-behavior: smooth } /* <-- scroll suave nativo */
+html{ scroll-behavior:smooth }
 body{
   margin:0;
   background: var(--qt-bg);
   color: var(--qt-ink);
   font-family: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol";
   font-variation-settings: "opsz" 14, "wght" 430;
-  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== Fondo de VIDEO con overlay ===== */
-/* Sube el video a z-index:0 (iOS odia -1 con stacking contexts) */
-.background-video {
-  position: fixed;
-  inset: 0;
-  z-index: 0;             /* <— antes era -1 */
-  overflow: hidden;
-  pointer-events: none;
+/* Bloquea scroll horizontal global */
+html, body { max-width:100%; overflow-x:hidden; }
+
+/* =========================
+   BACKGROUND VIDEO (único)
+========================= */
+.background-video{
+  position: fixed; inset:0;
+  z-index: 0;                 /* iOS-friendly (evita -1) */
+  overflow:hidden; pointer-events:none;
 }
-.background-video video { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
-.background-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%);
-  pointer-events: none;
+.background-video video{
+  width:100%; height:100%; object-fit:cover; will-change:transform;
+}
+.background-overlay{
+  position:absolute; inset:0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.2) 0%, rgba(0,0,0,.5) 100%);
+  pointer-events:none;
 }
 
-/* ===== Layout ===== */
+/* Garantiza UI por encima del video */
+#root, .app-root, main, header, .nav, .container-grid { position:relative; z-index:1; }
+
+/* =========================
+   LAYOUT
+========================= */
 .container-grid{ width:100%; max-width:1280px; margin-inline:auto; padding-inline:24px }
 @media (min-width:1400px){ .container-grid{ max-width:1440px } }
-.full-bleed{ width:100%; }
+.full-bleed{ width:100%; max-width:100%; overflow-x:hidden; }
 .section{ border-top:1px solid var(--qt-line) }
 .hr{ height:1px; background:var(--qt-line) }
 
-/* ===== Tipografía ===== */
+/* =========================
+   TIPO
+========================= */
 .h1{ font-size: clamp(42px, 6.2vw, 86px); line-height:.95; letter-spacing:-.02em; font-weight:800; font-variation-settings:"opsz" 32, "wght" 800 }
 .h2{ font-size: clamp(28px, 3.8vw, 42px); line-height:1.05; letter-spacing:-.01em; font-weight:800; font-variation-settings:"opsz" 24, "wght" 760 }
 .lead{ color: var(--qt-muted); font-size: clamp(16px, 2vw, 18px) }
 .kicker{ text-transform:uppercase; letter-spacing:.14em; color:var(--qt-muted); font-size:.8rem }
 
-/* ===== UI ===== */
+/* =========================
+   UI BASA
+========================= */
 .btn{
---black-700: hsla(0 0% 12% / 1);
+  --black-700: hsla(0 0% 12% / 1);
   --border_radius: 9999px;
-  --transtion: 0.3s ease-in-out;
-  --offset: 2px;
+  --transtion: .3s ease-in-out;
 
-  cursor: pointer;
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  transform-origin: center;
-
-  padding: 1rem 2rem;
-  background-color: transparent;
-
-  border: none;
-  border-radius: var(--border_radius);
-  transform: scale(calc(1 + (var(--active, 0) * 0.1)));
-
+  cursor:pointer; position:relative; display:flex; align-items:center; gap:.5rem;
+  transform-origin:center; padding:1rem 2rem; background:transparent;
+  border:none; border-radius:var(--border_radius);
+  transform: scale(calc(1 + (var(--active,0) * .1)));
   transition: transform var(--transtion);
 }
 .btn:hover{ transform: translateY(-2px); filter: brightness(1.06); }
+
 .btn-ghost{
   display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
   padding:.9rem 1.2rem; border-radius:12px; font-weight:700; color:#fff;
@@ -88,23 +104,85 @@ body{
 .cover{ position:relative; overflow:hidden; border-radius:14px; border:1px solid var(--qt-line); background:#0e1320 }
 .cover img, .cover video{ width:100%; height:100%; object-fit:cover; display:block }
 
-/* Navbar */
-.navlink{ padding:.55rem .8rem; border-radius:10px; color:#cfdbff }
-.navlink:hover{ color:#fff; background:rgba(244, 244, 242, 0.06) }
+/* =========================
+   NAVBAR (full-bleed)
+========================= */
+.nav{
+  position: sticky; top:0; z-index:50;
+  background:transparent; /* fondo via ::before */
+  border-bottom:none;
+}
+.nav::before{
+  content:""; position:absolute; inset:0;
+  left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; /* bleed 100vw */
+  background:#ffffffd1;
+  border-bottom:1px solid var(--border, rgba(255,255,255,.12));
+  backdrop-filter: blur(2px);
+  z-index:-1;
+  border-bottom-left-radius:20%;
+  border-bottom-right-radius:20%;
+}
+.nav-inner{
+  max-width:1140px; margin:0 auto; padding:12px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; flex-wrap:wrap; min-height:70px; box-sizing:border-box;
+}
+.brand img{ height:70px; width:auto; display:block; }
 
-/* Login */
+.links{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.links a{ color:rgb(29,75,179); }
+.links a:hover{ color:var(--qt-ink, #f9ffea); }
+
+.btn-outline{
+  padding:8px 12px; border:1px solid var(--qt-line);
+  border-radius:10px; background:transparent; color:var(--qt-ink);
+}
+.btn-outline:hover{ border-color:var(--qt-ring); }
+
+/* Burger responsive */
+.nav-burger{ display:none; place-items:center; gap:8px; border:1px solid var(--qt-line); padding:.6rem; border-radius:10px }
+.nav-burger > span{ width:40px; height:4px; background:rgb(29,75,179); border-radius:2px; display:block; }
+.nav-tray{
+  display:none; position:absolute; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;
+  top:100%; background:rgba(9,12,20,.92); border-bottom:1px solid var(--qt-line); max-width:100%; overflow-x:hidden;
+}
+.nav-tray.open{ display:block; }
+.nav-row{ display:block; padding:14px 22px; border-top:1px solid var(--qt-line); }
+
+@media (max-width:768px){
+  .links-desktop{ display:none; }
+  .nav-burger{ display:grid; }
+}
+
+/* =========================
+   NAV LINKS (anim)
+========================= */
+.nav-a{ position:relative; display:inline-flex; align-items:center; gap:.4rem; padding:.6rem .8rem; color:#cfd7ff; }
+.nav-a:hover{ color:#fff }
+.nav-underline{
+  position:absolute; left:.8rem; right:.8rem; bottom:.35rem; height:2px; border-radius:999px;
+  background: linear-gradient(90deg, transparent, var(--qt-ring), transparent);
+  transform:scaleX(0); transform-origin:50% 50%; transition: transform .28s cubic-bezier(.2,.8,.2,1);
+}
+.nav-a:hover .nav-underline{ transform:scaleX(1) }
+
+/* =========================
+   LOGIN
+========================= */
 .login-wrap{ min-height: calc(100vh - 72px - 120px); display:grid; place-items:center; padding: 48px 16px; }
 .card.login-card{ width:100%; max-width:560px; padding:22px; }
 .login-card .label{ color:var(--qt-muted); font-size:14px; margin:10px 0 6px; }
 .login-card .input{
-  box-sizing:border-box; width:100%; height:46px; padding:10px 12px;
+  width:100%; height:46px; padding:10px 12px;
   background:#0f1528; color:#e8ecf8; border:1px solid rgba(255,255,255,.12);
   border-radius:12px; outline:none;
 }
 .login-card .input:focus{ border-color: var(--qt-ring); outline:2px solid var(--qt-ring); }
 .login-card .login-button{ width:100%; margin-top:14px; }
 
-/* Cursor avanzado */
+/* =========================
+   CURSOR / CONTACT DOCK
+========================= */
 .cursor{
   position: fixed; top:0; left:0; width:24px; height:24px; pointer-events:none; z-index:9999;
   border-radius:999px; border:2px solid rgba(255,255,255,.85); transform:translate(-50%,-50%);
@@ -113,9 +191,8 @@ body{
 .cursor.-hide{ opacity:0 }
 .cursor.-hover{ width:44px; height:44px; background:#fff; border-color:#fff }
 
-/* Dock de contacto */
 .contact-dock{
-  position: fixed; right:24px; bottom:24px; z-index: 60;
+  position: fixed; right:24px; bottom:24px; z-index:60;
   display:flex; gap:8px; opacity:0; transform: translateY(8px);
   transition: opacity .25s ease, transform .25s ease;
 }
@@ -124,41 +201,30 @@ body{
   display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px;
   border-radius:12px; border:1px solid var(--qt-line); background: rgba(255,255,255,.06); color:#fff;
 }
-@media (max-width: 768px){ .contact-dock{ display:none } }
+@media (max-width:768px){ .contact-dock{ display:none } }
 
-/* === Accesibilidad: focus ring global (halo blanco suave) === */
-:root{
-  --focus-ring: rgba(255,255,255,.55);
-  --focus-ring-shadow: 0 0 0 3px var(--focus-ring), 0 8px 24px rgba(0,0,0,.25);
+/* =========================
+   ACCESSIBILIDAD (focus ring blanco)
+========================= */
+:where(:focus, :focus-visible){ outline:none !important; outline-color:transparent !important; outline-offset:0 !important; }
+button::-moz-focus-inner{ border:0; }
+a, button{ -webkit-tap-highlight-color:transparent; }
+
+:where(
+  button,[type="button"],[type="submit"],[role="button"], a,
+  .button,.btn,.btn-ghost,.nav-a,.nav-burger
+):is(:focus, :focus-visible, :focus-within){
+  box-shadow: var(--focus-shadow) !important;
+  border-color: transparent !important;
 }
-button:focus, button:focus-visible,
-a:focus, a:focus-visible,
-[role="button"]:focus, [role="button"]:focus-visible,
-.button:focus, .button:focus-visible,
-.btn:focus, .btn:focus-visible,
-.btn-ghost:focus, .btn-ghost:focus-visible,
-.nav-a:focus-visible, .nav-burger:focus-visible,
-.rail-btn:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring-shadow);
-  border-color: transparent;
-}
-a, button { -webkit-tap-highlight-color: transparent; }
-
-/* === UI UPGRADE PACK === */
-
-/* Tokens extra */
-:root{
-  --qt-nav:#0B1020;
-  --qt-purple:#7C5CFF;
-  --qt-pink:#FF4D9D;
-  --qt-cyan:#2CF7F7;
-  --qt-amber:#FFC24D;
-  --qt-glow: 0 0 40px rgba(111,164,255,.25);
+:where(.button,.btn,.btn-ghost):has(:focus){
+  box-shadow: var(--focus-shadow) !important;
 }
 
-/* Animated beams background */
-.beams{ position: fixed; inset: -20% -10% auto -10%; height: 60vh; z-index: -1; pointer-events:none; filter: blur(40px) saturate(120%); }
+/* =========================
+   UI UPGRADE PACK
+========================= */
+.beams{ position: fixed; inset: -20% -10% auto -10%; height: 60vh; z-index:-1; pointer-events:none; filter: blur(40px) saturate(120%); }
 .beam{ position:absolute; inset:auto; width:50vw; height:30vh; border-radius:999px; opacity:.22; mix-blend-mode: screen; }
 .beam.b1{ background: radial-gradient(60% 120% at 10% 40%, var(--qt-accent), transparent); top:5%; left:5%; animation: float1 16s ease-in-out infinite alternate; }
 .beam.b2{ background: radial-gradient(70% 120% at 85% 50%, var(--qt-purple), transparent); top:0; right:0; animation: float2 18s ease-in-out infinite alternate; }
@@ -168,13 +234,16 @@ a, button { -webkit-tap-highlight-color: transparent; }
 @keyframes float2{ 0%{transform:translateX(-8px)}100%{transform:translateX(8px)} }
 @keyframes float3{ 0%{transform:translate(-6px, -6px)}100%{transform:translate(10px, 12px)} }
 
-/* Subtle noise overlay */
-.noise-overlay{ position: fixed; inset: 0; pointer-events:none; z-index: -1; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='.05'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E"); opacity:.25 }
+.noise-overlay{
+  position: fixed; inset: 0; pointer-events:none; z-index:-1;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='.05'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+  opacity:.25;
+}
 
-/* Magic button */
+/* Magic button base (si lo usas por clase) */
 .btn-magic{
-  --size: 18px;
-  position: relative; display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  --size:18px;
+  position:relative; display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
   padding:.85rem 1.15rem; border-radius:14px; font-weight:800; letter-spacing:.2px;
   background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,.22), transparent 30%),
               linear-gradient(180deg, var(--qt-accent), var(--qt-accent-2));
@@ -186,249 +255,25 @@ a, button { -webkit-tap-highlight-color: transparent; }
   background: radial-gradient(120px 120px at var(--x, 50%) var(--y, 50%), rgba(255,255,255,.38), transparent 40%);
   transition: opacity .2s ease;
 }
-.btn-magic:hover .btn-shine{ opacity: 1 }
+.btn-magic:hover .btn-shine{ opacity:1 }
 .btn-magic:active{ transform: translateY(1px) }
 
-/* Tilt card base */
+/* Tilt card */
 .tilt-card{ background: rgba(255,255,255,.03); border:1px solid var(--qt-line); border-radius:18px; transition: transform .12s ease, border-color .2s ease; will-change: transform; }
 .tilt-card:hover{ border-color: rgba(255,255,255,.18) }
 
 /* Social rail */
-.social-rail{ position: fixed; right: 18px; bottom: 18px; display:flex; flex-direction:column; gap:10px; z-index: 60; }
-.rail-btn{ width:48px; height:48px; border-radius:14px; display:grid; place-items:center; color:#fff; background:#12182A; border:1px solid var(--qt-line); box-shadow: var(--qt-glow); transition: transform .12s ease, filter .2s ease; }
+.social-rail{ position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:10px; z-index:60; }
+.rail-btn{ width:48px; height:48px; border-radius:14px; display:grid; place-items:center; color:#fff; background:#12182A; border:1px solid var(--qt-line); box-shadow:var(--qt-glow); transition: transform .12s ease, filter .2s ease; }
 .rail-btn:hover{ transform: translateY(-2px); filter: brightness(1.1); }
 .rail-whatsapp{ background: linear-gradient(180deg, #25D366, #128C7E) }
 
-/* Navbar animations */
-.nav-a{ position:relative; display:inline-flex; align-items:center; gap:.4rem; padding:.6rem .8rem; color:#cfd7ff; }
-.nav-a:hover{ color:#fff }
-.nav-underline{ position:absolute; left:.8rem; right:.8rem; bottom:.35rem; height:2px; border-radius:999px; background: linear-gradient(90deg, transparent, var(--qt-ring), transparent); transform: scaleX(0); transform-origin: 50% 50%; transition: transform .28s cubic-bezier(.2,.8,.2,1); }
-.nav-a:hover .nav-underline{ transform: scaleX(1) }
+/* =========================
+   HOVERS / NAVLINKS (simple)
+========================= */
+.navlink{ padding:.55rem .8rem; border-radius:10px; color:#cfdbff }
+.navlink:hover{ color:#fff; background:rgba(244,244,242,.06) }
 
-.nav-burger{ display:grid; place-items:center; gap:4px; border:1px solid var(--qt-line); padding:.4rem .5rem; border-radius:10px }
-.nav-burger > span{ display:block; width:30px; height:2px; background:#cfd7ff; border-radius:2px }
-
-.nav-tray{ transform-origin: top; transform: scaleY(0); transition: transform .25s ease; background: rgba(9,12,20,.85); border-bottom:1px solid var(--qt-line) }
-.nav-tray.open{ transform: scaleY(1) }
-.nav-row{ display:block; padding:14px 22px; border-top: 1px solid var(--qt-line) }
-
-/* Footer social pills */
-.social{ display:inline-grid; place-items:center; width:30px; height:50px; border:1px solid var(--qt-line); border-radius:10px; background: rgba(255,255,255,.02) }
-.social.small{ width:26px; height:26px; font-size:12px }
-
-/* Reset tras remover Lenis (asegura scroll nativo) */
-html, body {
-  height: auto !important;
-  overflow: auto !important;
-}
-/* === NAVBAR (full-bleed + logo fijo + móvil) === */
-
-.nav{
-  position: sticky; top: 0; z-index: 50;
-  background: transparent;                 /* el fondo lo pone ::before */
-  border-bottom: none;
-  
-}
-
-/* Fondo que sangra a 100vw aunque el header esté dentro de un contenedor */
-.nav::before{
-  content:"";
-  position:absolute; inset:0;
-  left:50%; right:50%;
-  margin-left:-50vw; margin-right:-50vw;   /* bleed */
-  background:#ffffff50;
-  border-bottom:1px solid var(--border, rgba(255,255,255,.12));
-  backdrop-filter: blur(2px);
-  z-index:-1;
-  border-bottom-left-radius:20%;
-  border-bottom-right-radius:20%;
-}
-
-.nav-inner{
-  max-width:1140px; margin:0 auto;
-  padding:12px 16px;
-  display:flex; align-items:center; justify-content:space-between;
-  gap:12px; flex-wrap:wrap;
-  min-height:70px;                        /* altura para el logo */
-  box-sizing:border-box;
-}
-
-/* Marca / logo de tamaño fijo (no cambia en móvil) */
-.brand img{ height:70px; width:auto; display:block; }
-/*aqui se cambia color de las letras del menu*/
-.links{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-.links a{ color:rgb(29,75,179); }
-.links a:hover{ color:var(--qt-ink, #f9ffea); }
-
-/* Botón outline opcional (Demo) */
-.btn-outline{
-  padding:8px 12px; border:1px solid var(--qt-line);
-  border-radius:10px; background:transparent; color:var(--qt-ink);
-}
-.btn-outline:hover{ border-color:var(--qt-ring); }
-
-/* Burger (oculto en desktop) */
-.nav-burger{ display:none; place-items:center; gap:8px;
-  border:1px solid var(--qt-line); padding:.6rem .6rem; border-radius:10px;
-}
-.nav-burger > span{ width:40px; height:4px; background:rgb(29,75,179); border-radius:2px; display:block; }
-
-/* Tray móvil (full width + mismo padding que el contenedor) */
-.nav-tray{
-  display:none;
-  position:absolute; left:50%; right:50%;  /* bleed a 100vw */
-  margin-left:-50vw; margin-right:-50vw;
-  top:100%;
-  background:rgba(9,12,20,.92);
-  border-bottom:1px solid var(--qt-line);
-}
-.nav-tray.open{ display:block; }
-.nav-row{ display:block; padding:14px 22px; border-top:1px solid var(--qt-line); }
-
-/* Responsive */
-@media (max-width:768px){
-  .links-desktop{ display:none; }          /* esconde los links en la barra */
-  .nav-burger{ display:grid; }             /* muestra el burger */
-}
-/* ===== FIX GLOBAL: focus ring blanco suave (sin azul nativo) ===== */
-:root{
-  --focus-ring: rgba(255,255,255,.55);
-  --focus-shadow: 0 0 0 3px var(--focus-ring), 0 8px 24px rgba(0,0,0,.25);
-}
-
-/* Apaga el outline azul nativo y aplica halo blanco a elementos interactivos */
-:where(a, button, .button, .btn, .btn-ghost, .nav-a, .nav-burger, [role="button"]):focus,
-:where(a, button, .button, .btn, .btn-ghost, .nav-a, .nav-burger, [role="button"]):focus-visible,
-:where(.button):focus-within { /* por si el foco cae dentro (svg, span, etc.) */
-  outline: none !important;
-  box-shadow: var(--focus-shadow) !important;
-  border-color: transparent !important;
-}
-
-/* Quita restos del UA en Firefox */
-button::-moz-focus-inner { border: 0; }
-
-/* Evita highlight azul en móviles */
-a, button { -webkit-tap-highlight-color: transparent; }
-a.button:focus,
-a.button:focus-visible { outline: none !important; }
-/* ===== FIX FINAL: fuera borde azul nativo; halo blanco suave ===== */
-
-/* 1) Apaga cualquier outline nativo del navegador en TODO foco */
-:where(:focus, :focus-visible){
-  outline: none !important;
-  outline-color: transparent !important;
-  outline-offset: 0 !important;
-}
-
-/* 2) Algunos navegadores (Firefox) meten un inner border en botones */
-button::-moz-focus-inner { border: 0; }
-
-/* 3) Aplica un focus ring blanco suave SOLO a controles interactivos comunes */
-:where(
-  button,
-  [type="button"],
-  [type="submit"],
-  [role="button"],
-  a,
-  .button,
-  .btn,
-  .btn-ghost,
-  .nav-a,
-  .nav-burger
-):is(:focus, :focus-visible, :focus-within){
-  box-shadow:
-    0 0 0 3px rgba(255,255,255,.55),
-    0 8px 24px rgba(0,0,0,.25) !important;
-  border-color: transparent !important;
-}
-
-/* 4) Si el foco cae en hijos (ej. el <svg> dentro de MagicButton), sube el halo al contenedor */
-:where(.button):has(:focus),
-:where(.btn):has(:focus),
-:where(.btn-ghost):has(:focus) {
-  box-shadow:
-    0 0 0 3px rgba(255,255,255,.55),
-    0 8px 24px rgba(0,0,0,.25) !important;
-}
-
-/* 5) Evita highlight azul en móviles */
-a, button { -webkit-tap-highlight-color: transparent; }
-
-/* ===== Background video fix (móvil + iOS) ===== */
-.bg-video-wrap{
-  position: fixed;
-  inset: 0;
-  z-index: 0;              /* en vez de -1 */
-  overflow: hidden;
-  pointer-events: none;    /* no bloquea clics */
-}
-
-.bg-video-wrap video{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* El parallax se gestiona desde JS y se desactiva en móvil */
-  will-change: transform;
-}
-
-.bg-video-overlay{
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,.2) 0%, rgba(0,0,0,.5) 100%);
-  pointer-events: none;
-}
-
-/* Asegura que tu UI quede encima del video */
-#root, .app-root, main, header, .nav, .container-grid {
-  position: relative;
-  z-index: 1;
-}
-
-/* Garantiza que la UI quede por encima del video (que ahora está en z:0) */
-#root, .app-root, main, header, .nav, .container-grid {
-  position: relative;
-  z-index: 1;
-}
-/* ==== FIX para video de fondo en móvil ==== */
-.background-video {
-  position: fixed;
-  inset: 0;
-  z-index: 0 !important;   /* antes -1, ahora visible */
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.background-video video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* asegura que tu UI esté arriba del video */
-#root,
-.app-root,
-main,
-header,
-.nav,
-.container-grid {
-  position: relative;
-  z-index: 1;
-}
-/* 🔒 Fix: bloquear scroll horizontal */
-html, body {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-/* Previene que contenedores con width:100vw causen overflow */
-.full-bleed,
-.nav::before,
-.nav-tray {
-  max-width: 100%;
-  overflow-x: hidden;
-}
+/* =========================
+   FIN
+========================= */

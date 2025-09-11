@@ -9,8 +9,7 @@ const DemoCard = ({ title, desc, img }) => {
         <div className="card-inner">
           <div className="card-front">
             <div className="cover h-[200px] overflow-hidden">
-                          <span className="kicker">{title}</span>
-
+              <span className="kicker">{title}</span>
               {img ? (
                 <img src={img} loading="lazy" />
               ) : (
@@ -21,11 +20,11 @@ const DemoCard = ({ title, desc, img }) => {
                     height: "100%",
                     color: "#89a2e8",
                   }}
-                >
-                </div>
+                />
               )}
             </div>
           </div>
+
           <div className="card-back">
             <div>
               <h4 className="text-lg font-semibold group-hover:underline underline-offset-4">
@@ -41,12 +40,18 @@ const DemoCard = ({ title, desc, img }) => {
 };
 
 const StyledWrapper = styled.div`
+  /* evita que el wrapper herede min-width que cause overflow en grids/flex */
+  min-width: 0;
+
   .card {
-    width: 130%;
+    width: 100%;          /* antes 130% -> causaba desborde */
+    max-width: 100%;      /* no pasar del contenedor */
+    min-width: 0;         /* permite encoger si el grid lo necesita */
     height: 400px;
     perspective: 1000px;
     background: none;
-    border:none;
+    border: none;
+    box-sizing: border-box;
   }
 
   .card-inner {
@@ -74,20 +79,21 @@ const StyledWrapper = styled.div`
     font-size: 20px;
     padding: 0.1rem;
     text-align: center;
+    overflow: hidden; /* por si el contenido se acerca al borde al rotar */
   }
 
-.card-front {
-  background-color: rgba(209, 213, 237, 0.06); /* semi-transparente */
-  backdrop-filter: blur(10px);  /* desenfoque del fondo */
-  -webkit-backdrop-filter: blur(10px); /* Safari */
-  color: #fff;
-  border: none;
-  background: none;
-  transform: rotateY(0deg);
-}
+  .card-front {
+    background-color: rgba(209, 213, 237, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    border: none;
+    background: none;
+    transform: rotateY(0deg);
+  }
 
   .card-back {
-    background-color: #f08a5d;
+    background-color:rgb(93, 235, 240);
     color: #fff;
     border: none;
     transform: rotateY(180deg);

@@ -99,7 +99,8 @@ export default function HomePage() {
         <div className="container-grid py-14">
           <div className="kicker mb-3">Qué hacemos</div>
           <h2 className="h2 mb-8">Servicios end-to-end</h2>
-                    <div className="grid sm:grid-cols-5 gap-10 mt-10">
+                    <div className="grid gap-10 mt-10 min-w-0 [grid-template-columns:repeat(auto-fit,minmax
+                    (320px,1fr))]">
             <DemoCard
               img={iaAplicada}
               title="IA aplicada"
