@@ -2,16 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 
 /**
  * BackgroundVideo:
- * - Parallax suave (mousemove)
+ * - Parallax suave (mousemove) SOLO en desktop (móvil lo desactiva para no romper autoplay)
  * - Fuente dinámica: mobile vs desktop (matchMedia)
  * - Audio SOLO la primera vez en desktop (persistido con localStorage)
- * - Replay programado opcional
+ * - Replay programado opcional (replayEveryMs)
  *
  * Props:
  *   mobileSrc: string  -> "/hero-bg-mobile.mp4"
  *   desktopSrc: string -> "/hero-bg-desktop.mp4"
  *   mobileMaxWidth: number -> breakpoint (px), default 768
- *   replayEveryMs: number -> cada cuánto reiniciar (0 = desactivado)
+ *   replayEveryMs: number -> cada cuánto reiniciar (0 = desactivado), default 30000
  *   pauseMs: number -> pausa antes de reiniciar (ms), default 0
  *   audioKey: string -> clave de localStorage para marcar primera reproducción, default "bgvid_audio_once"
  */
@@ -39,8 +39,10 @@ export default function BackgroundVideo({
     };
   }, [mobileMaxWidth]);
 
-  // Parallax suave
+  // Parallax suave SOLO en desktop (en móvil lo desactivamos)
   useEffect(() => {
+    if (isMobile) return; // <-- clave para iOS/Android
+
     const onMove = (e) => {
       const w = window.innerWidth, h = window.innerHeight;
       const dx = (e.clientX - w / 2) / (w / 2);
@@ -62,7 +64,7 @@ export default function BackgroundVideo({
       window.removeEventListener("mousemove", onMove);
       cancelAnimationFrame(st.current.raf);
     };
-  }, []);
+  }, [isMobile]);
 
   // Decide mute inicial: en desktop SOLO la primera vez intentamos con audio
   useEffect(() => {
@@ -78,23 +80,24 @@ export default function BackgroundVideo({
 
     const tryPlay = async () => {
       try {
-        // Si muted=false podría bloquearse; capturamos error y forzamos mute
         el.muted = muted;
         await el.play();
-        // Si logró reproducirse con sonido por primera vez en desktop, marca la bandera
         if (!muted && typeof window !== "undefined") {
           localStorage.setItem(audioKey, "1");
         }
       } catch {
         // Autoplay con audio bloqueado -> forzamos mute y reintentamos
         el.muted = true;
-        setMuted(true);
-        try { await el.play(); } catch {}
+        if (muted === false) {
+          // evita loop de setMuted si ya estamos en true
+          try { await el.play(); } catch {}
+        } else {
+          try { await el.play(); } catch {}
+        }
       }
     };
 
-    // (Re)carga fuente al cambiar tamaño/variante
-    el.load?.();
+    el.load?.(); // fuerza recarga si cambió la fuente
     tryPlay();
 
     // Replay programado opcional
@@ -108,7 +111,6 @@ export default function BackgroundVideo({
           await new Promise(r => setTimeout(r, pauseMs));
         }
         videoRef.current.currentTime = 0;
-        // En replays, siempre respetamos el estado (si ya marcamos audio una vez, seguirá muteado)
         try { await videoRef.current.play(); } catch {}
       }, replayEveryMs);
     };
@@ -123,22 +125,24 @@ export default function BackgroundVideo({
     };
   }, [muted, isMobile, replayEveryMs, pauseMs, audioKey]);
 
-  // Cambia la fuente según vista
   const src = isMobile ? mobileSrc : desktopSrc;
 
   return (
-    <div className="background-video" aria-hidden>
+    <div className="bg-video-wrap" aria-hidden>
       <video
-        key={src}              // fuerza refresco del <video> al cambiar fuente
+        key={src}           // refresca al cambiar fuente
         ref={videoRef}
         autoPlay
-        playsInline
-        muted={muted}          // controlado por estado
-        // no ponemos loop: si quieres bucle continuo, usa replayEveryMs=0 y agrega loop
+        playsInline         // necesario para iOS
+        muted={muted}       // controlado por estado
+        loop                // si quieres replay manual, pon replayEveryMs=0
+        preload="auto"
+        poster="/hero-poster.jpg"
       >
+        {/* MP4 H.264 funciona en iOS */}
         <source src={src} type="video/mp4" />
       </video>
-      <div className="background-overlay" />
+      <div className="bg-video-overlay" />
     </div>
   );
 }

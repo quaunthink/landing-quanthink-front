@@ -23,7 +23,14 @@ body{
 }
 
 /* ===== Fondo de VIDEO con overlay ===== */
-.background-video { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+/* Sube el video a z-index:0 (iOS odia -1 con stacking contexts) */
+.background-video {
+  position: fixed;
+  inset: 0;
+  z-index: 0;             /* <— antes era -1 */
+  overflow: hidden;
+  pointer-events: none;
+}
 .background-video video { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
 .background-overlay {
   position: absolute; inset: 0;
@@ -347,3 +354,81 @@ button::-moz-focus-inner { border: 0; }
 
 /* 5) Evita highlight azul en móviles */
 a, button { -webkit-tap-highlight-color: transparent; }
+
+/* ===== Background video fix (móvil + iOS) ===== */
+.bg-video-wrap{
+  position: fixed;
+  inset: 0;
+  z-index: 0;              /* en vez de -1 */
+  overflow: hidden;
+  pointer-events: none;    /* no bloquea clics */
+}
+
+.bg-video-wrap video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* El parallax se gestiona desde JS y se desactiva en móvil */
+  will-change: transform;
+}
+
+.bg-video-overlay{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.2) 0%, rgba(0,0,0,.5) 100%);
+  pointer-events: none;
+}
+
+/* Asegura que tu UI quede encima del video */
+#root, .app-root, main, header, .nav, .container-grid {
+  position: relative;
+  z-index: 1;
+}
+
+/* Garantiza que la UI quede por encima del video (que ahora está en z:0) */
+#root, .app-root, main, header, .nav, .container-grid {
+  position: relative;
+  z-index: 1;
+}
+/* ==== FIX para video de fondo en móvil ==== */
+.background-video {
+  position: fixed;
+  inset: 0;
+  z-index: 0 !important;   /* antes -1, ahora visible */
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.background-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* asegura que tu UI esté arriba del video */
+#root,
+.app-root,
+main,
+header,
+.nav,
+.container-grid {
+  position: relative;
+  z-index: 1;
+}
+/* 🔒 Fix: bloquear scroll horizontal */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Previene que contenedores con width:100vw causen overflow */
+.full-bleed,
+.nav::before,
+.nav-tray {
+  max-width: 100%;
+  overflow-x: hidden;
+}
