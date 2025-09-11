@@ -6,7 +6,10 @@ import dataI from "../assets/data.png";
 import apis from "../assets/apis.png";
 import frontAvanzado from "../assets/front-avanzado.png";
 import sys from "../assets/systems.png";
-
+import iaAplicadaVid from "../assets/ia-aplicada.mp4"
+import frontAvanzadoVid from "../assets/front-avanzado.mp4"
+import apisVid from "../assets/apis.mp4"
+import dataVid from "../assets/data.mp4"
 const Feature = ({ title, desc }) => (
   <div className="card p-6">
     <div className="kicker mb-2">Servicio</div>
@@ -99,27 +102,30 @@ export default function HomePage() {
         <div className="container-grid py-14">
           <div className="kicker mb-3">Qué hacemos</div>
           <h2 className="h2 mb-8">Servicios end-to-end</h2>
-                    <div className="grid gap-10 mt-10 min-w-0 [grid-template-columns:repeat(auto-fit,minmax
-                    (320px,1fr))]">
+                    <div className="grid gap-10 mt-10 min-w-0 [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
             <DemoCard
               img={iaAplicada}
               title="IA aplicada"
               desc="LLMs, RAG, visión y workflows a medida en dominios legales, médicos y públicos."
+              backVideo={iaAplicadaVid}
             />
             <DemoCard
               img={frontAvanzado}
               title="Frontend UI/UX"
               desc="Interfaces de alto rendimiento, animaciones de producto y accesibilidad."
+               backVideo={frontAvanzadoVid}
             />
             <DemoCard
               img={apis}
               title="APIs"
               desc="Arquitecturas modernas, microservicios, mensajería, seguridad y observabilidad."
+              backVideo={apisVid}
             />
             <DemoCard
               img={dataI}
               title="Data Analysis"
               desc="ETL, lakes, catálogos y cuadros ejecutivos en tiempo real."
+              backVideo={dataVid}
             />
             <DemoCard
               img={sys}
