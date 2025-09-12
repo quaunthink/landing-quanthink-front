@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import MagicButton from "../components/ui/MagicButton";
 import DemoCard from "../components/ui/DemoCard";
-import iaAplicada from "../assets/ia-aplicada.webp";
-import dataI from "../assets/data.webp";
-import apis from "../assets/apis.webp";
-import frontAvanzado from "../assets/front-avanzado.webp";
-import sys from "../assets/systems.webp";
+import iaAplicada from "../assets/ia-aplicada.jpg";
+import dataI from "../assets/data.jpg";
+import apis from "../assets/apis.jpg";
+import frontAvanzado from "../assets/front-avanzado.jpg";
+import sys from "../assets/systems.jpg";
 import iaAplicadaVid from "../assets/ia-aplicada.webm";
 import frontAvanzadoVid from "../assets/front-avanzado.mp4";
 import apisVid from "../assets/apis.mp4";
 import dataVid from "../assets/data.webm";
-import Apps from "../assets/apps.webp";
+import Apps from "../assets/apps.jpg";
 import AppsVid from "../assets/apps.mp4";
 import SysVid from "../assets/sysVid.webm";
 
@@ -181,7 +181,7 @@ export default function HomePage() {
             </h1>
             <p className="lead mt-4 max-w-2xl">
               Creamos tecnología personalizada para eficientar el tratamiento de
-              información para la toma de decisiones eficaz y eficiente.
+              información para la toma de decisiones eficaz.
             </p>
             <div className="mt-8 flex gap-3 flex-wrap">
               <MagicButton as="a" href="#contacto">
@@ -195,9 +195,7 @@ export default function HomePage() {
 
           <div className="lg:col-span-5">
             <FacebookVideo url="https://www.facebook.com/watch/?v=24315342834801551" />
-            <div className="text-[13px] text-[var(--qt-muted)] mt-2">
-              Una vista rápida de cómo trabajamos y qué entregamos.
-            </div>
+            <div className="text-[13px] text-[var(--qt-muted)] mt-2"></div>
           </div>
         </div>
       </section>
@@ -205,43 +203,95 @@ export default function HomePage() {
       {/* SERVICIOS */}
       <section id="servicios" className="section">
         <div className="container-grid py-14">
-          <div className="kicker mb-3">Qué hacemos</div>
-          <h2 className="h2 mb-8">Servicios end-to-end</h2>
-          <div className="grid gap-10 mt-10 min-w-0 [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
+          <div className="kicker mb-3">Servicios</div>
+          <h2 className="h2 mb-8">Infraestructura modular y escalable</h2>
+          <div className="grid gap-5  min-w-0 [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
             <DemoCard
               img={iaAplicada}
               title="IA aplicada"
-              desc="LLMs, RAG, visión y workflows a medida en dominios legales, médicos y públicos."
+              desc={
+                <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
+                  <li>Integración de IA para procesamiento acelerado.</li>
+                  <li>Creación y entrenamiento de modelos independientes.</li>
+                  <li>Interpretación de información técnica en tiempo real.</li>
+                  <li>Workflows a medida en todas las áreas.</li>
+                </ul>
+              }
               backVideo={iaAplicadaVid}
             />
             <DemoCard
               img={frontAvanzado}
               title="Frontend UI/UX"
-              desc="Interfaces de alto rendimiento, animaciones de producto y accesibilidad."
+              desc={
+                <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
+                  <li>Uso de REACT para diseños de vanguardia .</li>
+                  <li>Integración de imagenes y videos de alta calidad.</li>
+                  <li>
+                    Mapeo de calor para mejorar la experiencia del usuario.
+                  </li>
+                  <li>
+                    Visuales impactantes y fluidos para versiones de escritorio
+                    y móviles.
+                  </li>
+                </ul>
+              }
               backVideo={frontAvanzadoVid}
             />
             <DemoCard
               img={apis}
               title="APIs"
-              desc="Arquitecturas modernas, microservicios, mensajería, seguridad y observabilidad."
+              desc={
+                <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
+                  <li>Backend Python como motor principal.</li>
+                  <li>Bases de datos consumibles de alta velocidad.</li>
+                  <li>
+                    Uso de ciframiento de última generación para mayor
+                    seguridad.
+                  </li>
+                  <li>Mantenimiento flexible y en tiempo record.</li>
+                </ul>
+              }
               backVideo={apisVid}
             />
             <DemoCard
               img={dataI}
               title="Análisis de Datos"
-              desc="ETL, lakes, catálogos y cuadros ejecutivos en tiempo real."
+              desc={
+                <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
+                  <li>Estandarización y limpieza de información.</li>
+                  <li>
+                    Cálculo avanzado estadístico para pronósticos certeros.
+                  </li>
+                  <li>Auditoría de datos.</li>
+                  <li>Generación de reportes analíticos y gráficos.</li>
+                </ul>
+              }
               backVideo={dataVid}
             />
             <DemoCard
               img={sys}
               title="Desde la Nube"
-              desc="Discovery con stakeholders, roadmaps con métricas y gobierno del delivery."
+              desc={
+                <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
+                  <li>Uso de servidores en la nube.</li>
+                  <li>Acceso desde cualquier parte del mundo vía web.</li>
+                  <li>Respaldo continuo de datos.</li>
+                  <li>Conectividad permanente.</li>
+                </ul>
+              }
               backVideo={SysVid}
             />
             <DemoCard
               img={Apps}
               title="Apps"
-              desc="ETL, lakes, catálogos y cuadros ejecutivos en tiempo real."
+              desc={
+                <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
+                  <li>Apps para IOS y Android.</li>
+                  <li>Combinación de accesos webApp y App móvil.</li>
+                  <li>Tiendas en línea con opción de pago digital.</li>
+                  <li>Juegos y contenidos educacionales.</li>
+                </ul>
+              }
               backVideo={AppsVid}
             />
           </div>

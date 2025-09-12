@@ -16,7 +16,7 @@ const DemoCard = ({ title, desc, img, backVideo }) => {
               {img ? (
                 <div className="img3d">
                   <div className="plate">
-                    <img src={img} loading="lazy" />
+                    <img src={img} loading="lazy" alt={title} />
                   </div>
                   <div className="shadow" />
                 </div>
@@ -39,8 +39,8 @@ const DemoCard = ({ title, desc, img, backVideo }) => {
               />
             )}
             <div className="back-content">
-              <h4 className="text-lg font-semibold">{title}</h4>
-              <p className="text-[15px] text-[var(--qt-muted)] mt-1">{desc}</p>
+              <h4 className="text-lg font-semibold kicker">{title}</h4>
+              <p className="text-[15px] mt-8 ">{desc}</p>
             </div>
           </div>
 
@@ -83,9 +83,10 @@ const StyledWrapper = styled.div`
 
   .card-back{
     color:#fff; border:none; transform: rotateY(180deg);
-    position:relative; /* importante para el video */
+    position:relative;
   }
 
+  /* Video al fondo */
   .back-video{
     position:absolute; inset:0;
     width:100%; height:100%;
@@ -93,9 +94,18 @@ const StyledWrapper = styled.div`
     z-index:0;
   }
 
+  /* Overlay oscuro SOBRE el video (los pseudo-elementos no funcionan en <video>) */
+  .card-back::after{
+    content:"";
+    position:absolute; inset:0;
+    background: rgba(9, 3, 94, 0.49); /* ajusta intensidad */
+    z-index:1;
+    pointer-events:none;
+  }
+
+  /* Contenido por encima del overlay */
   .back-content{
-    position:relative; z-index:1;
-    background: rgba(0,0,0,.35);
+    position:relative; z-index:2;
     padding:1.5rem; border-radius:10px;
   }
 
