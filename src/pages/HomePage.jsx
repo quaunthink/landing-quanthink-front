@@ -1,18 +1,18 @@
 import React from "react";
 import MagicButton from "../components/ui/MagicButton";
 import DemoCard from "../components/ui/DemoCard";
-import iaAplicada from "../assets/ia-aplicada.png";
-import dataI from "../assets/data.png";
-import apis from "../assets/apis.png";
-import frontAvanzado from "../assets/front-avanzado.png";
-import sys from "../assets/systems.png";
-import iaAplicadaVid from "../assets/ia-aplicada.mp4"
-import frontAvanzadoVid from "../assets/front-avanzado.mp4"
-import apisVid from "../assets/apis.mp4"
-import dataVid from "../assets/data.mp4"
-import Apps from "../assets/apps.png"
-import AppsVid from "../assets/apps.mp4"
-import SysVid from "../assets/sysVid.mp4"
+import iaAplicada from "../assets/ia-aplicada.webp";
+import dataI from "../assets/data.webp";
+import apis from "../assets/apis.webp";
+import frontAvanzado from "../assets/front-avanzado.webp";
+import sys from "../assets/systems.webp";
+import iaAplicadaVid from "../assets/ia-aplicada.webm";
+import frontAvanzadoVid from "../assets/front-avanzado.mp4";
+import apisVid from "../assets/apis.mp4";
+import dataVid from "../assets/data.webm";
+import Apps from "../assets/apps.webp";
+import AppsVid from "../assets/apps.mp4";
+import SysVid from "../assets/sysVid.webm";
 
 const Feature = ({ title, desc }) => (
   <div className="card p-6">
@@ -50,21 +50,53 @@ const Case = ({ tag, title, desc, img }) => (
   </a>
 );
 
+/* --- Embed 16:9 responsivo sin fullscreen --- */
+function FacebookVideo({ url = "https://www.facebook.com/watch/?v=24315342834801551" }) {
+  const src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
+    url
+  )}&show_text=false`;
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        aspectRatio: "16 / 9",
+        overflow: "hidden",
+        borderRadius: "12px",
+      }}
+    >
+      <iframe
+        src={src}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          border: "none",
+        }}
+        scrolling="no"
+        frameBorder="0"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+        loading="lazy"
+        title="Facebook video"
+      />
+    </div>
+  );
+}
+
 export default function HomePage() {
   return (
     <div>
-      {/* HERO — left-aligned, full height */}
+      {/* HERO */}
       <section id="inicio" className="full-bleed">
         <div className="container-grid min-h-[calc(100vh-72px)] grid lg:grid-cols-12 gap-10 items-start py-16 lg:py-20">
           <div className="lg:col-span-7 pt-6">
-            <div className="kicker mb-3">Consultoría & Producto</div>
+            <div className="kicker mb-3">Think Smarter</div>
             <h1 className="h1">
-              Software inteligente para organizaciones con presión real.
+              Soluciones inteligentes a la medida de nuestros clientes.
             </h1>
             <p className="lead mt-4 max-w-2xl">
-              Diseñamos, construimos y operamos plataformas, IA aplicada y
-              experiencias robustas. Desde un sprint táctico hasta programas
-              multi-equipo.
+              Creamos tecnología personalizada para eficientar el tratamiento de información para la toma de decisiones eficaz y eficiente.
             </p>
             <div className="mt-8 flex gap-3 flex-wrap">
               <MagicButton as="a" href="#contacto">
@@ -76,26 +108,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Reel de trabajo */}
           <div className="lg:col-span-5">
-            <div className="cover" style={{ aspectRatio: "16/10" }}>
-              <video
-                src="/reel.webm"
-                poster="/reel-poster.jpg"
-                autoPlay
-                muted
-                playsInline
-                loop
-                preload="none"
-                loading="lazy"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
-                }}
-              />
-            </div>
+            <FacebookVideo url="https://www.facebook.com/watch/?v=24315342834801551" />
             <div className="text-[13px] text-[var(--qt-muted)] mt-2">
               Una vista rápida de cómo trabajamos y qué entregamos.
             </div>
@@ -108,7 +122,7 @@ export default function HomePage() {
         <div className="container-grid py-14">
           <div className="kicker mb-3">Qué hacemos</div>
           <h2 className="h2 mb-8">Servicios end-to-end</h2>
-                    <div className="grid gap-10 mt-10 min-w-0 [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
+          <div className="grid gap-10 mt-10 min-w-0 [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
             <DemoCard
               img={iaAplicada}
               title="IA aplicada"
@@ -119,7 +133,7 @@ export default function HomePage() {
               img={frontAvanzado}
               title="Frontend UI/UX"
               desc="Interfaces de alto rendimiento, animaciones de producto y accesibilidad."
-               backVideo={frontAvanzadoVid}
+              backVideo={frontAvanzadoVid}
             />
             <DemoCard
               img={apis}
@@ -146,8 +160,6 @@ export default function HomePage() {
               backVideo={AppsVid}
             />
           </div>
-           
-          
         </div>
       </section>
 

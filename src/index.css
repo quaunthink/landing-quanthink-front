@@ -74,8 +74,24 @@ html, body { max-width:100%; overflow-x:hidden; }
 ========================= */
 .h1{ font-size: clamp(42px, 6.2vw, 86px); line-height:.95; letter-spacing:-.02em; font-weight:800; font-variation-settings:"opsz" 32, "wght" 800 }
 .h2{ font-size: clamp(28px, 3.8vw, 42px); line-height:1.05; letter-spacing:-.01em; font-weight:800; font-variation-settings:"opsz" 24, "wght" 760 }
-.lead{ color: var(--qt-muted); font-size: clamp(16px, 2vw, 18px) }
-.kicker{ text-transform:uppercase; letter-spacing:.14em; color:var(--qt-muted); font-size:.8rem }
+.lead{ color: var(--qt-ink); font-size: clamp(16px, 2vw, 18px) }
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  color: var(--qt-ink);
+  font-size: 1.2rem;
+  display: inline-block;
+  background: linear-gradient(90deg, var(--qt-ink) 0%, #ffff00 50%, var(--qt-ink) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: flowText 3s linear infinite;
+}
+
+@keyframes flowText {
+  0%   { background-position: 200% center; letter-spacing: .15em; }
+  100% { background-position: -200% center; letter-spacing: .15em; }
+}
 
 /* =========================
    UI BASA
