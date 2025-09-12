@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MagicButton from "../components/ui/MagicButton";
 import DemoCard from "../components/ui/DemoCard";
 import iaAplicada from "../assets/ia-aplicada.webp";
@@ -50,11 +50,66 @@ const Case = ({ tag, title, desc, img }) => (
   </a>
 );
 
-/* --- Embed 16:9 responsivo sin fullscreen --- */
-function FacebookVideo({ url = "https://www.facebook.com/watch/?v=24315342834801551" }) {
-  const src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
-    url
-  )}&show_text=false`;
+/* --- Facebook Video con control de audio en móvil (usa SDK y gesto del usuario) --- */
+function FacebookVideo({
+  url = "https://www.facebook.com/watch/?v=24315342834801551",
+}) {
+  const boxRef = useRef(null);
+  const [player, setPlayer] = useState(null);
+  const [sdkReady, setSdkReady] = useState(false);
+
+  // Carga del SDK una sola vez
+  useEffect(() => {
+    if (window.FB && window.FB.XFBML) {
+      setSdkReady(true);
+      return;
+    }
+    const scriptId = "facebook-jssdk";
+    if (document.getElementById(scriptId)) return;
+
+    const js = document.createElement("script");
+    js.id = scriptId;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0";
+    js.async = true;
+    js.defer = true;
+    js.onload = () => {
+      // FB se inicializa automáticamente con XFBML=1 por el hash
+      setSdkReady(true);
+    };
+    document.body.appendChild(js);
+  }, []);
+
+  // Parsear el div fb-video y obtener instancia del reproductor
+  useEffect(() => {
+    if (!sdkReady || !boxRef.current) return;
+
+    const parse = () => {
+      if (window.FB && window.FB.XFBML) {
+        window.FB.Event.subscribe("xfbml.ready", function (msg) {
+          if (msg.type === "video") {
+            setPlayer(msg.instance);
+          }
+        });
+        window.FB.XFBML.parse(boxRef.current);
+      }
+    };
+    parse();
+
+    return () => {
+      if (window.FB && window.FB.Event && player) {
+        // No hay ununsubscribe público necesario aquí para el video embed
+      }
+    };
+  }, [sdkReady]);
+
+  // Gesto de usuario para habilitar sonido y reproducir dentro del frame
+  const handleEnableSound = () => {
+    if (player && player.play && player.unmute) {
+      player.unmute();
+      player.play();
+    }
+  };
+
   return (
     <div
       style={{
@@ -62,24 +117,53 @@ function FacebookVideo({ url = "https://www.facebook.com/watch/?v=24315342834801
         width: "100%",
         aspectRatio: "16 / 9",
         overflow: "hidden",
-        borderRadius: "12px",
+        borderRadius: 12,
       }}
     >
-      <iframe
-        src={src}
+      {/* Contenedor a parsear por el SDK */}
+      <div
+        ref={boxRef}
         style={{
           position: "absolute",
           inset: 0,
           width: "100%",
           height: "100%",
-          border: "none",
         }}
-        scrolling="no"
-        frameBorder="0"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-        loading="lazy"
-        title="Facebook video"
-      />
+      >
+        <div
+          className="fb-video"
+          data-href={url}
+          data-allowfullscreen="true"
+          data-show-text="false"
+          data-autoplay="false"
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
+
+      {/* Overlay para activar sonido (se puede ocultar cuando ya hay player) */}
+      <button
+        onClick={handleEnableSound}
+        type="button"
+        style={{
+          position: "absolute",
+          right: 12,
+          bottom: 12,
+          zIndex: 2,
+          padding: "8px 12px",
+          borderRadius: 9999,
+          background:
+            "linear-gradient(180deg, rgba(18,24,42,.85), rgba(18,24,42,.65))",
+          color: "#fff",
+          border: "1px solid rgba(255,255,255,.25)",
+          backdropFilter: "blur(8px)",
+          fontSize: 13,
+          lineHeight: 1,
+          cursor: "pointer",
+        }}
+        aria-label="Activar sonido"
+      >
+        🔊 Sonido
+      </button>
     </div>
   );
 }
@@ -96,7 +180,8 @@ export default function HomePage() {
               Soluciones inteligentes a la medida de nuestros clientes.
             </h1>
             <p className="lead mt-4 max-w-2xl">
-              Creamos tecnología personalizada para eficientar el tratamiento de información para la toma de decisiones eficaz y eficiente.
+              Creamos tecnología personalizada para eficientar el tratamiento de
+              información para la toma de decisiones eficaz y eficiente.
             </p>
             <div className="mt-8 flex gap-3 flex-wrap">
               <MagicButton as="a" href="#contacto">
