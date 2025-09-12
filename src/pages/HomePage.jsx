@@ -6,13 +6,7 @@ import dataI from "../assets/data.jpg";
 import apis from "../assets/apis.jpg";
 import frontAvanzado from "../assets/front-avanzado.jpg";
 import sys from "../assets/systems.jpg";
-import iaAplicadaVid from "../assets/ia-aplicada.webm";
-import frontAvanzadoVid from "../assets/front-avanzado.mp4";
-import apisVid from "../assets/apis.mp4";
-import dataVid from "../assets/data.webm";
 import Apps from "../assets/apps.jpg";
-import AppsVid from "../assets/apps.mp4";
-import SysVid from "../assets/sysVid.webm";
 
 const Feature = ({ title, desc }) => (
   <div className="card p-6">
@@ -50,15 +44,10 @@ const Case = ({ tag, title, desc, img }) => (
   </a>
 );
 
-/* --- Facebook Video con control de audio en móvil (usa SDK y gesto del usuario) --- */
-function FacebookVideo({
-  url = "https://www.facebook.com/watch/?v=24315342834801551",
-}) {
+function FacebookVideo({ url }) {
   const boxRef = useRef(null);
-  const [player, setPlayer] = useState(null);
   const [sdkReady, setSdkReady] = useState(false);
 
-  // Carga del SDK una sola vez
   useEffect(() => {
     if (window.FB && window.FB.XFBML) {
       setSdkReady(true);
@@ -72,43 +61,16 @@ function FacebookVideo({
     js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0";
     js.async = true;
     js.defer = true;
-    js.onload = () => {
-      // FB se inicializa automáticamente con XFBML=1 por el hash
-      setSdkReady(true);
-    };
+    js.onload = () => setSdkReady(true);
     document.body.appendChild(js);
   }, []);
 
-  // Parsear el div fb-video y obtener instancia del reproductor
   useEffect(() => {
     if (!sdkReady || !boxRef.current) return;
-
-    const parse = () => {
-      if (window.FB && window.FB.XFBML) {
-        window.FB.Event.subscribe("xfbml.ready", function (msg) {
-          if (msg.type === "video") {
-            setPlayer(msg.instance);
-          }
-        });
-        window.FB.XFBML.parse(boxRef.current);
-      }
-    };
-    parse();
-
-    return () => {
-      if (window.FB && window.FB.Event && player) {
-        // No hay ununsubscribe público necesario aquí para el video embed
-      }
-    };
-  }, [sdkReady]);
-
-  // Gesto de usuario para habilitar sonido y reproducir dentro del frame
-  const handleEnableSound = () => {
-    if (player && player.play && player.unmute) {
-      player.unmute();
-      player.play();
+    if (window.FB && window.FB.XFBML) {
+      window.FB.XFBML.parse(boxRef.current);
     }
-  };
+  }, [sdkReady]);
 
   return (
     <div
@@ -120,7 +82,6 @@ function FacebookVideo({
         borderRadius: 12,
       }}
     >
-      {/* Contenedor a parsear por el SDK */}
       <div
         ref={boxRef}
         style={{
@@ -139,31 +100,6 @@ function FacebookVideo({
           style={{ width: "100%", height: "100%" }}
         />
       </div>
-
-      {/* Overlay para activar sonido (se puede ocultar cuando ya hay player) */}
-      <button
-        onClick={handleEnableSound}
-        type="button"
-        style={{
-          position: "absolute",
-          right: 12,
-          bottom: 12,
-          zIndex: 2,
-          padding: "8px 12px",
-          borderRadius: 9999,
-          background:
-            "linear-gradient(180deg, rgba(18,24,42,.85), rgba(18,24,42,.65))",
-          color: "#fff",
-          border: "1px solid rgba(255,255,255,.25)",
-          backdropFilter: "blur(8px)",
-          fontSize: 13,
-          lineHeight: 1,
-          cursor: "pointer",
-        }}
-        aria-label="Activar sonido"
-      >
-        🔊 Sonido
-      </button>
     </div>
   );
 }
@@ -217,25 +153,18 @@ export default function HomePage() {
                   <li>Workflows a medida en todas las áreas.</li>
                 </ul>
               }
-              backVideo={iaAplicadaVid}
             />
             <DemoCard
               img={frontAvanzado}
               title="Frontend UI/UX"
               desc={
                 <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
-                  <li>Uso de REACT para diseños de vanguardia .</li>
-                  <li>Integración de imagenes y videos de alta calidad.</li>
-                  <li>
-                    Mapeo de calor para mejorar la experiencia del usuario.
-                  </li>
-                  <li>
-                    Visuales impactantes y fluidos para versiones de escritorio
-                    y móviles.
-                  </li>
+                  <li>Uso de REACT para diseños de vanguardia.</li>
+                  <li>Integración de imágenes y videos de alta calidad.</li>
+                  <li>Mapeo de calor para mejorar la experiencia del usuario.</li>
+                  <li>Visuales impactantes y fluidos para escritorio y móviles.</li>
                 </ul>
               }
-              backVideo={frontAvanzadoVid}
             />
             <DemoCard
               img={apis}
@@ -244,14 +173,10 @@ export default function HomePage() {
                 <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
                   <li>Backend Python como motor principal.</li>
                   <li>Bases de datos consumibles de alta velocidad.</li>
-                  <li>
-                    Uso de ciframiento de última generación para mayor
-                    seguridad.
-                  </li>
-                  <li>Mantenimiento flexible y en tiempo record.</li>
+                  <li>Uso de cifrado de última generación para mayor seguridad.</li>
+                  <li>Mantenimiento flexible y en tiempo récord.</li>
                 </ul>
               }
-              backVideo={apisVid}
             />
             <DemoCard
               img={dataI}
@@ -259,14 +184,11 @@ export default function HomePage() {
               desc={
                 <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
                   <li>Estandarización y limpieza de información.</li>
-                  <li>
-                    Cálculo avanzado estadístico para pronósticos certeros.
-                  </li>
+                  <li>Cálculo estadístico para pronósticos certeros.</li>
                   <li>Auditoría de datos.</li>
-                  <li>Generación de reportes analíticos y gráficos.</li>
+                  <li>Reportes analíticos y gráficos.</li>
                 </ul>
               }
-              backVideo={dataVid}
             />
             <DemoCard
               img={sys}
@@ -279,7 +201,6 @@ export default function HomePage() {
                   <li>Conectividad permanente.</li>
                 </ul>
               }
-              backVideo={SysVid}
             />
             <DemoCard
               img={Apps}
@@ -287,12 +208,11 @@ export default function HomePage() {
               desc={
                 <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
                   <li>Apps para IOS y Android.</li>
-                  <li>Combinación de accesos webApp y App móvil.</li>
-                  <li>Tiendas en línea con opción de pago digital.</li>
+                  <li>WebApp y App móvil.</li>
+                  <li>Tiendas en línea con pago digital.</li>
                   <li>Juegos y contenidos educacionales.</li>
                 </ul>
               }
-              backVideo={AppsVid}
             />
           </div>
         </div>

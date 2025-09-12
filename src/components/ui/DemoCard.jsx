@@ -1,12 +1,10 @@
 // DemoCard.jsx
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
-const DemoCard = ({ title, desc, img, backVideo }) => {
-  const [showVideo, setShowVideo] = useState(false);
-
+const DemoCard = ({ title, desc, img }) => {
   return (
-    <StyledWrapper onMouseEnter={() => setShowVideo(true)}>
+    <StyledWrapper>
       <div className="card">
         <div className="card-inner">
 
@@ -27,20 +25,12 @@ const DemoCard = ({ title, desc, img, backVideo }) => {
           </div>
 
           <div className="card-back">
-            {backVideo && showVideo && (
-              <video
-                className="back-video"
-                src={backVideo}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="none"
-              />
+            {img && (
+              <img className="back-img" src={img} alt={title} loading="lazy" />
             )}
             <div className="back-content">
               <h4 className="text-lg font-semibold kicker">{title}</h4>
-              <p className="text-[15px] mt-8 ">{desc}</p>
+              <p className="text-[15px] mt-8">{desc}</p>
             </div>
           </div>
 
@@ -86,30 +76,19 @@ const StyledWrapper = styled.div`
     position:relative;
   }
 
-  /* Video al fondo */
-  .back-video{
+  .back-img{
     position:absolute; inset:0;
     width:100%; height:100%;
     object-fit:cover;
     z-index:0;
+    filter:brightness(.4);
   }
 
-  /* Overlay oscuro SOBRE el video (los pseudo-elementos no funcionan en <video>) */
-  .card-back::after{
-    content:"";
-    position:absolute; inset:0;
-    background: rgba(9, 3, 94, 0.49); /* ajusta intensidad */
-    z-index:1;
-    pointer-events:none;
-  }
-
-  /* Contenido por encima del overlay */
   .back-content{
-    position:relative; z-index:2;
+    position:relative; z-index:1;
     padding:1.5rem; border-radius:10px;
   }
 
-  /* 3D estilos previos */
   .img3d{ --depth:22px; --radius:12px; position:relative; width:100%; height:100%;
     perspective:800px; display:grid; place-items:center; }
   .img3d .plate{ position:relative; width:100%; height:100%; transform:translateZ(var(--depth));
