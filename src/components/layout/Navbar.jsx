@@ -36,13 +36,16 @@ export default function Navbar() {
 
         {/* Links desktop */}
         <nav className="links links-desktop">
-          <NavLinkA to="/">Inicio</NavLinkA>
+          <a href="/#inicio" className="nav-a">
+            <span>Inicio</span>
+            <i className="nav-underline" />
+          </a>
           <a href="/#servicios" className="nav-a">
             <span>Servicios</span>
             <i className="nav-underline" />
           </a>
-          <a href="/#casos" className="nav-a">
-            <span>Casos</span>
+          <a href="/#sectores" className="nav-a">
+            <span>Sectores</span>
             <i className="nav-underline" />
           </a>
           <a href="/#contacto" className="nav-a">
@@ -73,8 +76,8 @@ export default function Navbar() {
         <a href="/#servicios" className="nav-row" onClick={() => setOpen(false)}>
           Servicios
         </a>
-        <a href="/#casos" className="nav-row" onClick={() => setOpen(false)}>
-          Casos
+        <a href="/#sectores" className="nav-row" onClick={() => setOpen(false)}>
+          Sectores
         </a>
         <a href="/#contacto" className="nav-row" onClick={() => setOpen(false)}>
           Contacto

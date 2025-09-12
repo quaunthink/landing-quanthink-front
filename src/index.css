@@ -263,10 +263,43 @@ a, button{ -webkit-tap-highlight-color:transparent; }
 .tilt-card:hover{ border-color: rgba(255,255,255,.18) }
 
 /* Social rail */
-.social-rail{ position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:10px; z-index:60; }
-.rail-btn{ width:48px; height:48px; border-radius:14px; display:grid; place-items:center; color:#fff; background:#12182A; border:1px solid var(--qt-line); box-shadow:var(--qt-glow); transition: transform .12s ease, filter .2s ease; }
-.rail-btn:hover{ transform: translateY(-2px); filter: brightness(1.1); }
-.rail-whatsapp{ background: linear-gradient(180deg, #25D366, #128C7E) }
+.social-rail {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 120;
+}
+
+.social-rail[data-variant="footer"] {
+  position: static;
+  right: auto;
+  bottom: auto;
+}
+
+.social-rail .rail-btn {
+  display: grid;
+  place-items: center;
+  transition: transform .12s ease, filter .2s ease;
+}
+
+@media (hover: hover) {
+  .social-rail .rail-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .social-rail .rail-btn,
+  .social-rail .rail-btn .svg {
+    transition: none !important;
+    transform: none !important;
+  }
+}
 
 /* =========================
    HOVERS / NAVLINKS (simple)

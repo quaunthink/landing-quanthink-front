@@ -51,6 +51,7 @@ export default function BackgroundVideo({
         playsInline
         muted={mutedByDefault}
         loop={replayEveryMs === 0}
+        preload="none"
       >
         <source src={src} type="video/mp4" />
       </video>

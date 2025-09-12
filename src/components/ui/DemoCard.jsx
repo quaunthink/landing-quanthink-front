@@ -1,10 +1,12 @@
 // DemoCard.jsx
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const DemoCard = ({ title, desc, img, backVideo }) => {
+  const [showVideo, setShowVideo] = useState(false);
+
   return (
-    <StyledWrapper>
+    <StyledWrapper onMouseEnter={() => setShowVideo(true)}>
       <div className="card">
         <div className="card-inner">
 
@@ -25,7 +27,7 @@ const DemoCard = ({ title, desc, img, backVideo }) => {
           </div>
 
           <div className="card-back">
-            {backVideo && (
+            {backVideo && showVideo && (
               <video
                 className="back-video"
                 src={backVideo}
@@ -33,6 +35,7 @@ const DemoCard = ({ title, desc, img, backVideo }) => {
                 muted
                 loop
                 playsInline
+                preload="none"
               />
             )}
             <div className="back-content">

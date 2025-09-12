@@ -10,6 +10,10 @@ import iaAplicadaVid from "../assets/ia-aplicada.mp4"
 import frontAvanzadoVid from "../assets/front-avanzado.mp4"
 import apisVid from "../assets/apis.mp4"
 import dataVid from "../assets/data.mp4"
+import Apps from "../assets/apps.png"
+import AppsVid from "../assets/apps.mp4"
+import SysVid from "../assets/sysVid.mp4"
+
 const Feature = ({ title, desc }) => (
   <div className="card p-6">
     <div className="kicker mb-2">Servicio</div>
@@ -50,7 +54,7 @@ export default function HomePage() {
   return (
     <div>
       {/* HERO — left-aligned, full height */}
-      <section className="full-bleed">
+      <section id="inicio" className="full-bleed">
         <div className="container-grid min-h-[calc(100vh-72px)] grid lg:grid-cols-12 gap-10 items-start py-16 lg:py-20">
           <div className="lg:col-span-7 pt-6">
             <div className="kicker mb-3">Consultoría & Producto</div>
@@ -82,6 +86,8 @@ export default function HomePage() {
                 muted
                 playsInline
                 loop
+                preload="none"
+                loading="lazy"
                 style={{
                   width: "100%",
                   height: "100%",
@@ -123,25 +129,33 @@ export default function HomePage() {
             />
             <DemoCard
               img={dataI}
-              title="Data Analysis"
+              title="Análisis de Datos"
               desc="ETL, lakes, catálogos y cuadros ejecutivos en tiempo real."
               backVideo={dataVid}
             />
             <DemoCard
               img={sys}
-              title="cloud servs"
+              title="Desde la Nube"
               desc="Discovery con stakeholders, roadmaps con métricas y gobierno del delivery."
+              backVideo={SysVid}
+            />
+            <DemoCard
+              img={Apps}
+              title="Apps"
+              desc="ETL, lakes, catálogos y cuadros ejecutivos en tiempo real."
+              backVideo={AppsVid}
             />
           </div>
+           
           
         </div>
       </section>
 
-      {/* CASOS */}
-      <section id="casos" className="section">
+      {/* SECTORES */}
+      <section id="sectores" className="section">
         <div className="container-grid py-14">
           <div className="kicker mb-3">Trabajo reciente</div>
-          <h2 className="h2 mb-8">Casos que mueven la aguja</h2>
+          <h2 className="h2 mb-8">Sectores</h2>
 
           <div className="grid md:grid-cols-2 gap-6">
             <Case

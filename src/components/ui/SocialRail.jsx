@@ -1,33 +1,218 @@
 import React from "react";
+import styled from "styled-components";
 
 /** Ajusta tus enlaces reales */
 const LINKS = {
-  whatsapp: "https://wa.me/5215555555555", // TODO: cambia al número real
-  linkedin: "https://www.linkedin.com/company/quanthink",
-  x: "https://x.com/quanthink",
-  instagram: "https://instagram.com/quanthink",
-  github: "https://github.com/quanthink"
+  whatsapp: "https://wa.me/5218117995916",
+  facebook: "https://www.facebook.com/profile.php?id=61579776782141",
+  instagram: "https://www.instagram.com/quanthinkmx?igsh=MTE4aTFnM3k3dzMycg==",
 };
 
-const Icon = ({name}) => {
-  switch(name){
-    case 'whatsapp': return (<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.66 15.03L2 22l5.11-1.33A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.07-1.12l-.29-.17-3 .78.8-2.92-.19-.3A8 8 0 1 1 12 20Zm4.61-5.39c-.25-.12-1.46-.72-1.69-.8-.23-.08-.4-.12-.57.12s-.65.8-.8.97c-.15.17-.3.18-.55.06s-1.08-.4-2.06-1.27a7.64 7.64 0 0 1-1.41-1.74c-.15-.26 0-.4.12-.52.12-.12.26-.3.38-.46.12-.15.17-.26.25-.43.08-.17.04-.32-.02-.45-.06-.12-.57-1.37-.78-1.88-.2-.48-.4-.42-.57-.43l-.48-.01c-.17 0-.43.06-.66.32-.23.26-.87.85-.87 2.08 0 1.22.9 2.4 1.02 2.57.12.17 1.78 2.73 4.3 3.83.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.46-.6 1.66-1.18.2-.58.2-1.06.14-1.17-.06-.11-.23-.17-.48-.29Z"/></svg>);
-    case 'linkedin': return (<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5ZM0 8.98h5V24H0V8.98Zm7.5 0H12v2.05h.07c.62-1.18 2.14-2.43 4.41-2.43C21.4 8.6 24 11 24 15.3V24h-5v-7.59c0-1.81-.03-4.15-2.53-4.15-2.54 0-2.93 1.98-2.93 4.02V24H7.5V8.98Z"/></svg>);
-    case 'x': return (<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2H21l-6.5 7.43L22 22h-6.844l-4.42-5.73L5.4 22H3l7.07-8.09L2 2h6.913l3.99 5.32L18.244 2Zm-1.19 18h1.95L7.05 4H5.1l11.954 16Z"/></svg>);
-    case 'instagram': return (<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2.2c3.2 0 3.584.012 4.85.07 1.17.055 1.95.24 2.41.4.61.22 1.05.48 1.51.94.46.46.72.9.94 1.51.16.46.35 1.24.4 2.41.06 1.27.07 1.65.07 4.85s-.012 3.585-.07 4.85c-.055 1.17-.24 1.95-.4 2.41-.22.61-.48 1.05-.94 1.51-.46.46-.9.72-1.51.94-.46.16-1.24.35-2.41.4-1.27.06-1.65.07-4.85.07s-3.585-.012-4.85-.07c-1.17-.055-1.95-.24-2.41-.4-.61-.22-1.05-.48-1.51-.94-.46-.46-.72-.9-.94-1.51-.16-.46-.35-1.24-.4-2.41-.06-1.27-.07-1.65-.07-4.85s.012-3.585.07-4.85c.055-1.17.24-1.95.4-2.41.22-.61.48-1.05.94-1.51.46-.46.9-.72 1.51-.94.46-.16 1.24-.35 2.41-.4C8.415 2.212 8.8 2.2 12 2.2m0-2.2C8.735 0 8.332.012 7.052.07 5.773.127 4.9.316 4.168.588a5.6 5.6 0 0 0-2.02 1.31A5.6 5.6 0 0 0 .838 3.92c-.272.732-.46 1.605-.518 2.884C.262 8.084.25 8.487.25 11.75s.012 3.666.07 4.946c.057 1.28.246 2.153.518 2.885a5.6 5.6 0 0 0 1.31 2.02 5.6 5.6 0 0 0 2.02 1.31c.732.272 1.605.46 2.884.518 1.28.057 1.683.07 4.946.07s3.666-.012 4.946-.07c1.28-.057 2.153-.246 2.885-.518a5.6 5.6 0 0 0 2.02-1.31 5.6 5.6 0 0 0 1.31-2.02c.272-.732.46-1.605.518-2.884.057-1.28.07-1.683.07-4.946s-.012-3.666-.07-4.946c-.057-1.28-.246-2.153-.518-2.885A5.6 5.6 0 0 0 20.08.838 5.6 5.6 0 0 0 18.06-.472c-.732-.272-1.605-.46-2.884-.518C13.666-.012 13.263 0 10 0H14c3.265 0 3.668.012 4.948.07 1.279.057 2.152.246 2.884.518a5.6 5.6 0 0 1 2.02 1.31 5.6 5.6 0 0 1 1.31 2.02c.272.732.46 1.605.518 2.884.057 1.28.07 1.683.07 4.946s-.012 3.666-.07 4.946c-.057 1.28-.246 2.153-.518 2.885a5.6 5.6 0 0 1-1.31 2.02 5.6 5.6 0 0 1-2.02 1.31c-.732.272-1.605.46-2.884.518C15.666 23.988 15.263 24 12 24z"/></svg>);
-    case 'github': return (<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.57v-2.01c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.35-1.77-1.35-1.77-1.1-.75.08-.74.08-.74 1.22.09 1.86 1.26 1.86 1.26 1.08 1.86 2.83 1.32 3.52 1.01.11-.78.42-1.32.76-1.63-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.37 1.24-3.21-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23A11.46 11.46 0 0 1 12 6.83c1.02.01 2.05.14 3.01.41 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.21 0 4.58-2.81 5.6-5.48 5.9.43.37.81 1.1.81 2.22v3.29c0 .31.21.67.82.56A12 12 0 0 0 12 .5Z"/></svg>);
-    default: return null;
+const Icon = ({ name }) => {
+  switch (name) {
+    case "whatsapp":
+      return (
+        <svg viewBox="0 0 24 24" className="svg" aria-hidden="true">
+          <path d="M12 2a10 10 0 0 0-8.66 15.03L2 22l5.11-1.33A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.07-1.12l-.29-.17-3 .78.8-2.92-.19-.3A8 8 0 1 1 12 20Zm4.61-5.39c-.25-.12-1.46-.72-1.69-.8-.23-.08-.4-.12-.57.12s-.65.8-.8.97c-.15.17-.3.18-.55.06s-1.08-.4-2.06-1.27a7.64 7.64 0 0 1-1.41-1.74c-.15-.26 0-.4.12-.52.12-.12.26-.3.38-.46.12-.15.17-.26.25-.43.08-.17.04-.32-.02-.45-.06-.12-.57-1.37-.78-1.88-.2-.48-.4-.42-.57-.43l-.48-.01c-.17 0-.43.06-.66.32-.23.26-.87.85-.87 2.08 0 1.22.9 2.4 1.02 2.57.12.17 1.78 2.73 4.3 3.83.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.46-.6 1.66-1.18.2-.58.2-1.06.14-1.17-.06-.11-.23-.17-.48-.29Z" />
+        </svg>
+      );
+    case "facebook":
+      return (
+        <svg viewBox="0 0 320 512" className="svg" aria-hidden="true">
+          <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+        </svg>
+      );
+    case "instagram":
+      return (
+        <svg viewBox="0 0 448 512" className="svg" aria-hidden="true">
+          <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9S160.5 370.9 224.1 370.9 339 319.6 339 255.9 287.7 141 224.1 141zm0 189.6a74.7 74.7 0 1 1 74.7-74.7 74.8 74.8 0 0 1-74.7 74.7zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1zM340.5 111.4a26.88 26.88 0 1 1 26.88-26.88A26.88 26.88 0 0 1 340.5 111.4z" />
+        </svg>
+      );
+    default:
+      return null;
   }
 };
 
-export default function SocialRail(){
+const items = [
+  { key: "whatsapp", href: LINKS.whatsapp },
+  { key: "facebook", href: LINKS.facebook },
+  { key: "instagram", href: LINKS.instagram },
+];
+
+export default function SocialRail({ variant = "rail", size = "md" }) {
   return (
-    <div className="social-rail">
-      <a className="rail-btn rail-whatsapp" href={LINKS.whatsapp} target="_blank" rel="noreferrer" aria-label="WhatsApp"><Icon name="whatsapp" /></a>
-      <a className="rail-btn" href={LINKS.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Icon name="linkedin" /></a>
-      <a className="rail-btn" href={LINKS.x} target="_blank" rel="noreferrer" aria-label="X"><Icon name="x" /></a>
-      <a className="rail-btn" href={LINKS.instagram} target="_blank" rel="noreferrer" aria-label="Instagram"><Icon name="instagram" /></a>
-      <a className="rail-btn" href={LINKS.github} target="_blank" rel="noreferrer" aria-label="GitHub"><Icon name="github" /></a>
-    </div>
+    <StyledRail
+      className="social-rail"
+      data-variant={variant}
+      data-size={size}
+      role="navigation"
+      aria-label="Redes sociales"
+    >
+      <div className="card">
+        <ul>
+          {items.map((it) => (
+            <li key={it.key} className={`iso-pro iso-${it.key}`}>
+              <span />
+              <span />
+              <span />
+              <a
+                className="rail-btn"
+                href={it.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Icon name={it.key} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </StyledRail>
   );
 }
+
+const StyledRail = styled.div`
+  --rail-size: 60px;
+  --rail-pad: 1rem;
+
+  &[data-size="sm"] {
+    --rail-size: 48px;
+    --rail-pad: 0.75rem;
+  }
+
+  .card {
+    max-width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    gap: 1rem;
+    background: none;
+    border: none;
+  }
+
+  .card ul {
+    padding: 0.8rem;
+    display: flex;
+    list-style: none;
+    gap: 0.9rem;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    margin: 0;
+    flex-direction: column;
+  }
+
+  &[data-variant="footer"] .card ul { flex-direction: row; }
+
+  @media (max-width: 640px) {
+    .card ul { flex-direction: row; }
+  }
+
+  .card ul li {
+    position: relative;
+    cursor: pointer;
+  }
+
+  /* Link: sin bordes/blancos al estar activo/foco */
+  .rail-btn {
+    display: grid;
+    place-items: center;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent;
+  }
+  .rail-btn:focus,
+  .rail-btn:active,
+  .rail-btn:focus-visible {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  .svg {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.2s ease, background 0.2s ease;
+    padding: var(--rail-pad);
+    height: var(--rail-size);
+    width: var(--rail-size);
+    border-radius: 9999px;
+    color: var(--rail-color, #999); /* icono por defecto = color de la red */
+    fill: currentColor;
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow:
+      inset 0 0 12px rgba(255, 255, 255, 0.18),
+      inset 0 0 4px rgba(255, 255, 255, 0.32),
+      0 4px 6px rgba(0, 0, 0, 0.10);
+  }
+
+  .iso-pro { transition: 0.35s ease; }
+  .iso-pro span {
+    opacity: 0;
+    position: absolute;
+    left: 0; top: 0;
+    height: var(--rail-size); width: var(--rail-size);
+    border-radius: 50%;
+    border: 2px solid var(--rail-color, #999);
+    box-shadow:
+      inset 0 0 16px rgba(255, 255, 255, 0.22),
+      inset 0 0 4px rgba(255, 255, 255, 0.35),
+      0 5px 5px rgba(0, 0, 0, 0.14);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  .iso-pro:hover .svg {
+    transform: translate(-12px, -12px);
+    background: var(--rail-color, #999); /* relleno del botón */
+    color: #fff; /* icono blanco al hover */
+  }
+  .iso-pro:hover span { opacity: 1; }
+  .iso-pro:hover span:nth-child(1) { opacity: 0.22; }
+  .iso-pro:hover span:nth-child(2) { opacity: 0.42; transform: translate(-6px, -6px); }
+  .iso-pro:hover span:nth-child(3) { opacity: 0.62; transform: translate(-12px, -12px); }
+
+  @media (max-width: 640px) {
+    .iso-pro:hover .svg { transform: translate(0, 0); }
+    .iso-pro:hover span:nth-child(2),
+    .iso-pro:hover span:nth-child(3) { transform: translate(0, 0); }
+  }
+
+  /* Colores por plataforma */
+  .iso-whatsapp { --rail-color: #25D366; }
+  .iso-facebook { --rail-color: #1877F2; }
+  .iso-instagram { --rail-color: #E1306C; }
+
+
+  /* Centrado inferior en móvil */
+@media (max-width: 640px) {
+  &[data-variant="rail"] {
+    position: fixed;
+    left: 87%;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    width: auto;
+    z-index: 120;
+
+    .card {
+      flex-direction: row;
+      gap: 8px;
+    }
+
+    .card ul {
+      flex-direction: row !important;
+      gap: 8px;
+    }
+  }
+}
+
+/* Footer desactiva el modo fijo */
+&[data-variant="footer"] {
+  position: static;
+  left: auto;
+  bottom: auto;
+  transform: none;
+}
+
+`;
