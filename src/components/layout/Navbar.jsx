@@ -48,10 +48,6 @@ export default function Navbar() {
             <span>Sectores</span>
             <i className="nav-underline" />
           </a>
-          <a href="/#contacto" className="nav-a">
-            <span>Contacto</span>
-            <i className="nav-underline" />
-          </a>
           <Link to="/login" className="nav-a">
             Demo
             <i className="nav-underline" />
@@ -79,11 +75,8 @@ export default function Navbar() {
         <a href="/#sectores" className="nav-row" onClick={() => setOpen(false)}>
           Sectores
         </a>
-        <a href="/#contacto" className="nav-row" onClick={() => setOpen(false)}>
-          Contacto
-        </a>
         <Link to="/login" className="nav-row" onClick={() => setOpen(false)}>
-          Demos
+          Demo
         </Link>
       </div>
     </header>

@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
+const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER;
+
 /** Ajusta tus enlaces reales */
 const LINKS = {
-  whatsapp: "https://wa.me/5218117995916",
-  facebook: "https://www.facebook.com/profile.php?id=61579776782141",
+whatsapp: `https://wa.me/${WHATSAPP_NUMBER}`,  facebook: "https://www.facebook.com/profile.php?id=61579776782141",
   instagram: "https://www.instagram.com/quanthinkmx?igsh=MTE4aTFnM3k3dzMycg==",
 };
 

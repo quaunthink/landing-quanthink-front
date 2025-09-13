@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "sweetalert2/dist/sweetalert2.min.css";
+
 
 /* =========================
    TOKENS / BASE
@@ -326,3 +328,38 @@ a, button{ -webkit-tap-highlight-color:transparent; }
 /* =========================
    FIN
 ========================= */
+/* 3) index.css (agrega al final o en tu hoja global) */
+
+.swal2-container{ backdrop-filter: blur(6px); }
+
+.swal2-popup.qt-popup{
+  background: rgba(15,18,30,0.88);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.swal2-title.qt-title{ font-size: 1.25rem; font-weight:700; }
+
+.qt-body{ font-size: 14px; color: rgba(255,255,255,.82); }
+.qt-actions{ display:flex; gap:.5rem; margin-top:1rem; }
+
+.qt-btn{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.625rem 1rem; border-radius:12px;
+  border:1px solid rgba(255,255,255,.18); cursor:pointer; font-weight:600;
+}
+.qt-btn-primary{
+  background: linear-gradient(180deg,#25D366,#128C7E);
+  color:#fff; border:none;
+}
+.qt-btn-ghost{ background: transparent; color:#fff; }
+
+.qt-thumb{ width:40px; height:40px; border-radius:8px; object-fit:cover; }
+.qt-kicker{ text-transform:uppercase; letter-spacing:.08em; opacity:.7; font-size:.75rem; }
+.cardex {
+  background-color: rgba(12, 31, 68, 0.498); /* azul oscuro translúcido */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* compatibilidad Safari */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+

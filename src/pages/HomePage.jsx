@@ -1,12 +1,24 @@
+// src/pages/HomePage.jsx
 import React, { useEffect, useRef, useState } from "react";
+import Swal from "sweetalert2";
 import MagicButton from "../components/ui/MagicButton";
 import DemoCard from "../components/ui/DemoCard";
+
 import iaAplicada from "../assets/ia-aplicada.jpg";
 import dataI from "../assets/data.jpg";
 import apis from "../assets/apis.jpg";
 import frontAvanzado from "../assets/front-avanzado.jpg";
 import sys from "../assets/systems.jpg";
 import Apps from "../assets/apps.jpg";
+
+import legis from "../assets/legislapp.png";
+import elect from "../assets/electoral.png";
+import edu from "../assets/educacion.png";
+import agri from "../assets/agri.png";
+import comun from "../assets/vecinos.png";
+import salud from "../assets/salud.png";
+
+const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || "521000000000";
 
 const Feature = ({ title, desc }) => (
   <div className="card p-6">
@@ -16,19 +28,31 @@ const Feature = ({ title, desc }) => (
   </div>
 );
 
-const Case = ({ tag, title, desc, img }) => (
-  <a href="#!" className="group card p-5 flex flex-col gap-3">
+const Case = ({ tag, title, desc, img, onClick }) => (
+  <a
+    href="#!"
+    onClick={(e) => {
+      e.preventDefault();
+      onClick?.({ tag, title, desc, img });
+    }}
+    className="group cardex p-5 flex flex-col gap-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 shadow-lg hover:bg-white/15 transition"
+  >
     <span className="kicker">{tag}</span>
-    <div className="cover h-[200px] overflow-hidden">
+    <div className="cover h-[200px] overflow-hidden rounded-lg">
       {img ? (
-        <img src={img} alt={title} loading="lazy" />
+        <img
+          src={img}
+          alt={title}
+          loading="lazy"
+          className="w-full h-full object-cover"
+        />
       ) : (
         <div
           style={{
             display: "grid",
             placeItems: "center",
             height: "100%",
-            color: "#89a2e8",
+            color: "#9a2e8",
           }}
         >
           Visual
@@ -105,6 +129,44 @@ function FacebookVideo({ url }) {
 }
 
 export default function HomePage() {
+  const openDemoModal = (item) => {
+    const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      `Hola, me interesa una demo de "${item?.title}".`
+    )}`;
+
+Swal.fire({
+  title: `<div class="kicker">Solicitar demo</div>
+  <div class="swal2-title qt-title">${item?.title || "Demo"}</div>`,
+  html: `
+    <div class="qt-body">
+      <div style="display:flex; align-items:center; gap:.75rem; margin-bottom:.75rem;">
+        <div>
+          <div style="opacity:.65; font-size:12px;">${item?.tag || ""}</div>
+          <div style="font-size:13px;">Agenda una demostración personalizada.</div>
+        </div>
+      </div>
+      <div class="qt-actions" style="display:flex; justify-content:center; gap:1rem; margin-top:1rem;">
+        <a id="wa-btn" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+          `Hola, me interesa una demo de "${item?.title}".`
+        )}" 
+        target="_blank" rel="noreferrer" class="qt-btn qt-btn-primary">
+          WhatsApp
+        </a>
+        <button id="close-btn" type="button" class="qt-btn qt-btn-ghost">Regresar</button>
+      </div>
+    </div>
+  `,
+  showConfirmButton: false,
+  buttonsStyling: false,
+  customClass: { popup: "qt-popup" },
+  backdrop: true,
+  showCloseButton: false,
+  didOpen: () => {
+    document.getElementById("close-btn")?.addEventListener("click", () => Swal.close());
+  }
+});
+  };
+
   return (
     <div>
       {/* HERO */}
@@ -120,8 +182,8 @@ export default function HomePage() {
               información para la toma de decisiones eficaz.
             </p>
             <div className="mt-8 flex gap-3 flex-wrap">
-              <MagicButton as="a" href="#contacto">
-                Empezar un proyecto
+              <MagicButton as="a" href="#sectores">
+                Sectores
               </MagicButton>
               <MagicButton as="a" href="#servicios">
                 Servicios
@@ -141,7 +203,8 @@ export default function HomePage() {
         <div className="container-grid py-14">
           <div className="kicker mb-3">Servicios</div>
           <h2 className="h2 mb-8">Infraestructura modular y escalable</h2>
-          <div className="grid gap-5  min-w-0 [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
             <DemoCard
               img={iaAplicada}
               title="IA aplicada"
@@ -161,8 +224,12 @@ export default function HomePage() {
                 <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
                   <li>Uso de REACT para diseños de vanguardia.</li>
                   <li>Integración de imágenes y videos de alta calidad.</li>
-                  <li>Mapeo de calor para mejorar la experiencia del usuario.</li>
-                  <li>Visuales impactantes y fluidos para escritorio y móviles.</li>
+                  <li>
+                    Mapeo de calor para mejorar la experiencia del usuario.
+                  </li>
+                  <li>
+                    Visuales impactantes y fluidos para escritorio y móviles.
+                  </li>
                 </ul>
               }
             />
@@ -173,7 +240,9 @@ export default function HomePage() {
                 <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
                   <li>Backend Python como motor principal.</li>
                   <li>Bases de datos consumibles de alta velocidad.</li>
-                  <li>Uso de cifrado de última generación para mayor seguridad.</li>
+                  <li>
+                    Uso de cifrado de última generación para mayor seguridad.
+                  </li>
                   <li>Mantenimiento flexible y en tiempo récord.</li>
                 </ul>
               }
@@ -207,7 +276,7 @@ export default function HomePage() {
               title="Apps"
               desc={
                 <ul className="list-disc text-left list-inside space-y-3 text-[17px] ">
-                  <li>Apps para IOS y Android.</li>
+                  <li>Apps para iOS y Android.</li>
                   <li>WebApp y App móvil.</li>
                   <li>Tiendas en línea con pago digital.</li>
                   <li>Juegos y contenidos educacionales.</li>
@@ -221,66 +290,56 @@ export default function HomePage() {
       {/* SECTORES */}
       <section id="sectores" className="section">
         <div className="container-grid py-14">
-          <div className="kicker mb-3">Trabajo reciente</div>
+          <div className="kicker mb-3">Sistemas Disponibles</div>
           <h2 className="h2 mb-8">Sectores</h2>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <Case
-              tag="Legislativo"
-              title="Comparador de iniciativas con trazabilidad"
+              tag="Gobierno"
+              title="Comparador de iniciativas legislativas con trazabilidad"
               desc="Múltiples fuentes, diffs semánticos y reportes."
-              img="/cases/legislativo.jpg"
+              img={legis}
+              onClick={openDemoModal}
             />
             <Case
               tag="Salud"
-              title="MSG1973: soporte clínico"
+              title="Administración hospitalaria, análisis de padecimientos y App para pacientes"
               desc="Modelos médicos especializados y flujos seguros."
-              img="/cases/salud.jpg"
-            />
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 mt-6">
-            <Case
-              tag="Datos públicos"
-              title="Gob Data Hub"
-              desc="Ingesta masiva y paneles ejecutivos."
-              img="/cases/datos.jpg"
+              img={salud}
+              onClick={openDemoModal}
             />
             <Case
-              tag="LegalTech"
-              title="Búsqueda de precedentes"
-              desc="RAG, embeddings y citación verificable."
-              img="/cases/legal.jpg"
+              tag="Agricultura"
+              title="APIs para rastreo de lluvia, calidad de las cosechas, plagas y medición satelital"
+              desc="Adaptación de sistemas de riego, drones y hardware especializado."
+              img={agri}
+              onClick={openDemoModal}
             />
             <Case
-              tag="Industria"
-              title="Mantenimiento predictivo"
-              desc="Telemetría, anomalías y recomendaciones."
-              img="/cases/industria.jpg"
+              tag="Educación"
+              title="Credencialización y sistemas de enseñanza a distancia con actividades pedagógicas"
+              desc="Inducción a la tecnología para estudiantes."
+              img={edu}
+              onClick={openDemoModal}
             />
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section id="contacto" className="section">
-        <div className="container-grid py-16">
-          <div className="card p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <div className="kicker mb-1">Contacto</div>
-              <h3 className="text-2xl font-bold">
-                ¿Listo para construir algo serio?
-              </h3>
-              <p className="text-[15px] text-[var(--qt-muted)] mt-1">
-                Agenda 30 minutos y te proponemos un plan.
-              </p>
-            </div>
-            <a href="mailto:contacto@quanthink.com" className="btn">
-              Escríbenos
-            </a>
+            <Case
+              tag="Comunidad"
+              title="Red de seguridad vecinal y accesos controlados a fraccionamientos privados"
+              desc="Instalación de equipo, botones de pánico y geolocalización en emergencias."
+              img={comun}
+              onClick={openDemoModal}
+            />
+            <Case
+              tag="Electoral"
+              title="Administración de equipos y medición de probabilidad de votación"
+              desc="Evaluación de equipos, rutas, imagen, discurso y análisis estadístico."
+              img={elect}
+              onClick={openDemoModal}
+            />
           </div>
         </div>
       </section>
+
     </div>
   );
 }
