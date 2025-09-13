@@ -191,11 +191,12 @@ Swal.fire({
             </div>
           </div>
 
-          <div className="lg:col-span-5">
-            <FacebookVideo url="https://www.facebook.com/watch/?v=24315342834801551" />
-            <div className="text-[13px] text-[var(--qt-muted)] mt-2"></div>
-          </div>
-        </div>
+<div className="lg:col-span-5 lg:self-center">
+  <div className="w-full">
+    <FacebookVideo url="https://www.facebook.com/watch/?v=24315342834801551" />
+    <div className="text-[13px] text-[var(--qt-muted)] mt-2"></div>
+  </div>
+</div>        </div>
       </section>
 
       {/* SERVICIOS */}
